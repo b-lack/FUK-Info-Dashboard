@@ -4,22 +4,15 @@ layout: home
 
 hero:
   name: "Forstliche Umweltkontrolle"
-  text: "Landeskompetenzzentrum Forst Eberswalde"
-  tagline: My great project tagline
+  text: ""
+  tagline: "Landeskompetenzzentrum Forst Eberswalde"
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Daten-Historie
+      link: /historie/aktuelle-witterungsdaten
     - theme: alt
       text: API Examples
       link: /api-examples
 
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
 
