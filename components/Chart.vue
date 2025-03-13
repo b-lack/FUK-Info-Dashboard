@@ -5,7 +5,7 @@
     import { createClient } from '@supabase/supabase-js';
 
     const apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w';
-    const url = 'http://116.203.31.116:8000/';
+    const url = 'https://forstliche-umweltkontrolle.de:8000/';
 
     // GET components attributes
     const attrs = useAttrs();
