@@ -50,6 +50,12 @@ export default defineConfig({
           items: [
             { text: 'Range by Date', link: '/api/range' },
           ]
+        },
+        {
+          text: 'Für angemeldete Nutzer',
+          items: [
+            { text: 'Daten manipulieren', link: '/api/authentication' },
+          ]
         }
       ]
     },
