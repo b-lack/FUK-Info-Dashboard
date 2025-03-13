@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Forstliche Umweltkontrolle",
   description: "Landeskompetenzzentrum Forst Eberswalde",
-  base: '/FUK-Info-Dashboard/',
+  //base: '/FUK-Info-Dashboard/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
