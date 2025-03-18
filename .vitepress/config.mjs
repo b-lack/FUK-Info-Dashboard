@@ -9,7 +9,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Allgemeines', link: '/allgemeines/aufgaben'},
-      { text: 'Inventuren Level I', link: '/inventur_level_1/bodenzustandserhebung'},
+      { text: 'Inventuren', link: '/inventur_level_1/bodenzustandserhebung'},
       { text: 'Daten-Historie', link: '/historie/aktuelle-witterungsdaten'},
       { text: 'API', link: '/api/getting_started'}
     ],
