@@ -9,7 +9,6 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Allgemeines', link: '/allgemeines/aufgaben'},
-      { text: 'Inventuren', link: '/inventur/bodenzustandserhebung'},
       { text: 'Inventuren', items:[
         {text: 'BZE', link: 'inventur/bodenzustandserhebung/bodenzustandserhebung'},
         {text: 'LWI', link: 'inventur/landeswaldinventur/landeswaldinventur'},
