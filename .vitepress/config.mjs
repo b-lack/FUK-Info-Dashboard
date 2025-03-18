@@ -10,7 +10,10 @@ export default defineConfig({
     nav: [
       { text: 'Allgemeines', link: '/allgemeines/aufgaben'},
       { text: 'Inventuren', link: '/inventur/bodenzustandserhebung'},
-      { text: 'Daten-Historie', link: '/historie/aktuelle-witterungsdaten'},
+      { text: 'Dauerbeobachtung', items:[
+        {text: 'ICP Forests', link: 'dauerbeobachtung/icp-forests/meteo'},
+        {text: 'Level II', link: 'dauerbeobachtung/level-ii/beerenbusch-kiefer_1202'}
+      ]},
       { text: 'API', link: '/api/getting_started'}
     ],
 
@@ -33,6 +36,20 @@ export default defineConfig({
             { text: 'Bodenzustandserhebung', link: '/inventur/bodenzustandserhebung' },
             { text: 'Waldzustandserhebung', link: '/inventur/waldzustandserhebung' },
             { text: 'Waldinventur', link: '/inventur/waldinventur' }
+          ]
+        }
+      ],
+      '/dauerbeobachtung/': [
+        {
+          text: 'ICP Forests',
+          items: [
+            { text: 'Meteo', link: '/dauerbeobachtung/icp-forests/meteo'}
+          ]
+        },
+        {
+          text: 'Level II',
+          items: [
+            { text: 'Beerenbusch Kiefer - 1202', link: '/dauerbeobachtung/level-ii/beerenbusch-kiefer_1202' }
           ]
         }
       ],
