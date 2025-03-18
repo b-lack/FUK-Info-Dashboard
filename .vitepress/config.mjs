@@ -9,7 +9,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Allgemeines', link: '/allgemeines/aufgaben'},
-      { text: 'Inventuren', link: '/inventur_level_1/bodenzustandserhebung'},
+      { text: 'Inventuren', link: '/inventur/bodenzustandserhebung'},
       { text: 'Daten-Historie', link: '/historie/aktuelle-witterungsdaten'},
       { text: 'API', link: '/api/getting_started'}
     ],
@@ -26,13 +26,13 @@ export default defineConfig({
           ]
         }
       ],
-      '/inventur_level_1/': [
+      '/inventur/': [
         {
-          text: 'Inventuren Level I',
+          text: 'Inventuren',
           items: [
-            { text: 'Bodenzustandserhebung', link: '/inventur_level_1/bodenzustandserhebung' },
-            { text: 'Waldzustandserhebung', link: '/inventur_level_1/waldzustandserhebung' },
-            { text: 'Waldinventur', link: '/inventur_level_1/waldinventur' }
+            { text: 'Bodenzustandserhebung', link: '/inventur/bodenzustandserhebung' },
+            { text: 'Waldzustandserhebung', link: '/inventur/waldzustandserhebung' },
+            { text: 'Waldinventur', link: '/inventur/waldinventur' }
           ]
         }
       ],
