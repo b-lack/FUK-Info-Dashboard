@@ -10,6 +10,11 @@ export default defineConfig({
     nav: [
       { text: 'Allgemeines', link: '/allgemeines/aufgaben'},
       { text: 'Inventuren', link: '/inventur/bodenzustandserhebung'},
+      { text: 'Inventuren', items:[
+        {text: 'BZE', link: 'inventur/bodenzustandserhebung/bodenzustandserhebung'},
+        {text: 'LWI', link: 'inventur/landeswaldinventur/landeswaldinventur'},
+        {text: 'WZE', link: 'inventur/waldzustandserhebung/waldzustandserhebung'}
+      ]},
       { text: 'Dauerbeobachtung', items:[
         {text: 'ICP Forests', link: 'dauerbeobachtung/icp-forests/meteo'},
         {text: 'Level II', link: 'dauerbeobachtung/level-ii/beerenbusch-kiefer_1202'}
@@ -31,11 +36,21 @@ export default defineConfig({
       ],
       '/inventur/': [
         {
-          text: 'Inventuren',
+          text: 'BZE',
           items: [
-            { text: 'Bodenzustandserhebung', link: '/inventur/bodenzustandserhebung' },
-            { text: 'Waldzustandserhebung', link: '/inventur/waldzustandserhebung' },
-            { text: 'Waldinventur', link: '/inventur/waldinventur' }
+            { text: 'Bodenzustandserhebung', link: '/inventur/bodenzustandserhebung/bodenzustandserhebung' }
+          ]
+        },
+        {
+          text: 'LWI',
+          items: [
+            { text: 'Landeswaldinventur', link: '/inventur/landeswaldinventur/landeswaldinventur' }
+          ]
+        },
+        {
+          text: 'WZE',
+          items: [
+            { text: 'Waldzustandserhebung', link: '/inventur/waldzustandserhebung/waldzustandserhebung' }
           ]
         }
       ],
