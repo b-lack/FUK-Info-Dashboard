@@ -1,16 +1,18 @@
 <script setup>
 
-    import { ref, onMounted, useAttrs, watch } from 'vue'
+    import { ref, onMounted, useAttrs, watch, getCurrentInstance, onBeforeUnmount } from 'vue'
     import * as echarts from 'echarts';
     import { createClient } from '@supabase/supabase-js';
 
-    const apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w';
-    const url = 'https://forstliche-umweltkontrolle.de:8000/';
+    const instance = getCurrentInstance();
+    const apikey = instance.appContext.config.globalProperties.$apikey;
+    const url = instance.appContext.config.globalProperties.$url;
 
     // GET components attributes
     const attrs = useAttrs();
 
     let myChart;
+    const chartContainer = ref(null);
     const data = ref([]);
     const dataMax = ref([]);
     const dataMin = ref([]);
@@ -51,13 +53,20 @@
             .not('daily_mean', 'is', null)
             .then(response => {
                 _parseData(response.data)
-                myChart = echarts.init(document.getElementById('chart'));
+                myChart = echarts.init(chartContainer.value);
                 _drawChart()
             })
             .catch(error => {
                 console.log(error)
             })
     }
+
+    // Resize handler function
+    const handleResize = () => {
+        if (myChart) {
+            myChart.resize();
+        }
+    };
 
     // Watch for changes in attrs.code_plot and attrs.code_variable
     watch(() => [attrs.code_plot, attrs.code_variable], ([newPlot, newVariable]) => {
@@ -70,8 +79,19 @@
         if(attrs.code_plot && attrs.code_variable) {
             _requestData(attrs.code_plot, attrs.code_variable)            
         }
+
+        // Add resize event listener
+        window.addEventListener('resize', handleResize);
     });
 
+    // Clean up resources when component unmounts
+    onBeforeUnmount(() => {
+        window.removeEventListener('resize', handleResize);
+        if (myChart) {
+            myChart.dispose();
+            myChart = null;
+        }
+    });
     
     
 
@@ -179,5 +199,5 @@
 </script>
 
 <template>
-    <div id="chart" style="width: 100%;height:500px;"></div>
+    <div ref="chartContainer" style="width: 100%; height:500px;"></div>
 </template>
