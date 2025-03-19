@@ -15,9 +15,9 @@ export default defineConfig({
     nav: [
       { text: 'Allgemeines', link: '/allgemeines/aufgaben'},
       { text: 'Inventuren', items:[
-        {text: 'BZE', link: 'inventur/bodenzustandserhebung/bodenzustandserhebung'},
-        {text: 'LWI', link: 'inventur/landeswaldinventur/landeswaldinventur'},
-        {text: 'WZE', link: 'inventur/waldzustandserhebung/waldzustandserhebung'}
+        {text: 'Bodenzustandserhebung', link: 'inventur/bodenzustandserhebung/bodenzustandserhebung'},
+        {text: 'Landeswaldinventur', link: 'inventur/landeswaldinventur/landeswaldinventur'},
+        {text: 'Waldzustandserhebung', link: 'inventur/waldzustandserhebung/waldzustandserhebung'}
       ]},
       { text: 'Dauerbeobachtung', items:[
         {text: 'ICP Forests', link: 'dauerbeobachtung/icp-forests/meteo'},

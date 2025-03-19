@@ -1,6 +1,7 @@
 {
   "devDependencies": {
-    "vitepress": "^1.6.3"
+    "vitepress": "^1.6.3",
+    "vuetify": "^3.7.18"
   },
   "scripts": {
     "docs:dev": "vitepress dev",
@@ -8,6 +9,7 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "@supabase/supabase-js": "^2.49.1",
     "echarts": "^5.6.0"
   }
