@@ -3,13 +3,19 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Forstliche Umweltkontrolle",
+  lang: 'de-DE',
   description: "Landeskompetenzzentrum Forst Eberswalde",
   //base: '/FUK-Info-Dashboard/',
+  search: {
+    provider: 'local'
+  },
   themeConfig: {
+    logo: '/lfe-logo.svg',
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Allgemeines', link: '/allgemeines/aufgaben'},
-      { text: 'Inventuren Level I', link: '/inventur_level_1/bodenzustandserhebung'},
+      { text: 'Level I', link: '/level_1/lage_methode'},
+      { text: 'Level II', link: '/level_2/lage_methode'},
       { text: 'Daten-Historie', link: '/historie/aktuelle-witterungsdaten'},
       { text: 'API', link: '/api/getting_started'}
     ],
@@ -20,19 +26,26 @@ export default defineConfig({
           text: 'Allgemeines',
           items: [
             { text: 'Aufgaben', link: '/allgemeines/aufgaben' },
-            { text: 'Struktur', link: '/allgemeines/struktur' },
-            { text: 'Level I', link: '/allgemeines/level_1' },
-            { text: 'Level II', link: '/allgemeines/level_2' }
+            { text: 'Struktur', link: '/allgemeines/struktur' }
           ]
         }
       ],
-      '/inventur_level_1/': [
+      '/level_1/': [
         {
-          text: 'Inventuren Level I',
+          text: 'Level I',
           items: [
-            { text: 'Bodenzustandserhebung', link: '/inventur_level_1/bodenzustandserhebung' },
-            { text: 'Waldzustandserhebung', link: '/inventur_level_1/waldzustandserhebung' },
-            { text: 'Waldinventur', link: '/inventur_level_1/waldinventur' }
+            { text: 'Lage & Methode', link: '/level_1/lage_methode' },
+            { text: 'Bodenzustandserhebung', link: '/level_1/bodenzustandserhebung' },
+            { text: 'Waldzustandserhebung', link: '/level_1/waldzustandserhebung' },
+            { text: 'Waldinventur', link: '/level_1/waldinventur' }
+          ]
+        }
+      ],
+      '/level_2/': [
+        {
+          text: 'Level II',
+          items: [
+            { text: 'Lage & Methode', link: '/level_2/lage_methode' }
           ]
         }
       ],

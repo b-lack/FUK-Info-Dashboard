@@ -68,9 +68,7 @@
 
     onMounted(async () => {
         if(attrs.code_plot && attrs.code_variable) {
-            _requestData(attrs.code_plot, attrs.code_variable)
-            console.log('sdfsdf');
-            
+            _requestData(attrs.code_plot, attrs.code_variable)            
         }
     });
 
