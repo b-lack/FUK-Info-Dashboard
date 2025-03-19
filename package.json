@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "vite-plugin-vuetify": "^2.1.0",
     "vitepress": "^1.6.3",
     "vuetify": "^3.7.18"
   },

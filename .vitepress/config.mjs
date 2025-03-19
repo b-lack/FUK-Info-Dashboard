@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import vuetify from 'vite-plugin-vuetify'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -112,5 +113,19 @@ export default defineConfig({
       message: 'Service des <b>Landesbetrieb Forst Brandenburg</b>',
       copyright: '<a href="https://forst.brandenburg.de/lfb/de/impressum/" target="blank">Impressum</a> <a href="https://forst.brandenburg.de/lfb/de/datenschutz/" target="blank">Datenschutz</a>'
     }
+  },
+  vite: {
+    plugins: [
+      vuetify(),
+    ],
+    // Prevent Vuetify from optimizing imports by default
+    ssr: {
+      noExternal: ['vuetify']
+    },
+    resolve: {
+      alias: {
+        '@': '/src',
+      },
+    },
   }
 })
