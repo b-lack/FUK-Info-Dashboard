@@ -14,9 +14,15 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Allgemeines', link: '/allgemeines/aufgaben'},
-      { text: 'Level I', link: '/level_1/lage_methode'},
-      { text: 'Level II', link: '/level_2/lage_methode'},
-      { text: 'Daten-Historie', link: '/historie/aktuelle-witterungsdaten'},
+      { text: 'Inventuren', items:[
+        {text: 'BZE', link: 'inventur/bodenzustandserhebung/bodenzustandserhebung'},
+        {text: 'LWI', link: 'inventur/landeswaldinventur/landeswaldinventur'},
+        {text: 'WZE', link: 'inventur/waldzustandserhebung/waldzustandserhebung'}
+      ]},
+      { text: 'Dauerbeobachtung', items:[
+        {text: 'ICP Forests', link: 'dauerbeobachtung/icp-forests/meteo'},
+        {text: 'Level II', link: 'dauerbeobachtung/level-ii/beerenbusch-kiefer_1202'}
+      ]},
       { text: 'API', link: '/api/getting_started'}
     ],
 
@@ -41,11 +47,37 @@ export default defineConfig({
           ]
         }
       ],
-      '/level_2/': [
+      '/inventur/': [
+        {
+          text: 'BZE',
+          items: [
+            { text: 'Bodenzustandserhebung', link: '/inventur/bodenzustandserhebung/bodenzustandserhebung' }
+          ]
+        },
+        {
+          text: 'LWI',
+          items: [
+            { text: 'Landeswaldinventur', link: '/inventur/landeswaldinventur/landeswaldinventur' }
+          ]
+        },
+        {
+          text: 'WZE',
+          items: [
+            { text: 'Waldzustandserhebung', link: '/inventur/waldzustandserhebung/waldzustandserhebung' }
+          ]
+        }
+      ],
+      '/dauerbeobachtung/': [
+        {
+          text: 'ICP Forests',
+          items: [
+            { text: 'Meteo', link: '/dauerbeobachtung/icp-forests/meteo'}
+          ]
+        },
         {
           text: 'Level II',
           items: [
-            { text: 'Lage & Methode', link: '/level_2/lage_methode' }
+            { text: 'Beerenbusch Kiefer - 1202', link: '/dauerbeobachtung/level-ii/beerenbusch-kiefer_1202' }
           ]
         }
       ],
