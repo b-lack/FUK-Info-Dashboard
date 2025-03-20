@@ -7,17 +7,17 @@
     const instance = getCurrentInstance();
     const apikey = instance.appContext.config.globalProperties.$apikey;
     const url = instance.appContext.config.globalProperties.$url;
+    const supabase = createClient(url, apikey)
 
     // GET components attributes
     const attrs = useAttrs();
-
+    
     let myChart;
     const chartContainer = ref(null);
     const data = ref([]);
     const dataMax = ref([]);
     const dataMin = ref([]);
     const dataRange = ref([]);
-    const supabase = createClient(url, apikey)
 
     function clearData() {
         data.value = [];
