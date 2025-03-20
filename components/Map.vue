@@ -3,7 +3,7 @@
     import {Deck, WebMercatorViewport, TRANSITION_EVENTS} from '@deck.gl/core';
     import {GeoJsonLayer, BitmapLayer, ScatterplotLayer} from '@deck.gl/layers';
     import {TileLayer} from '@deck.gl/geo-layers';
-    import {bboxPolygon, difference, bbox as turfbbox, centroid as turfcentroid, featureCollection} from '@turf/turf';
+    import {bboxPolygon, difference, featureCollection} from '@turf/turf';
     import { createClient } from '@supabase/supabase-js';
 
     const instance = getCurrentInstance();
@@ -20,7 +20,7 @@
     const boundingBox = [
         [12.0833, 51.3411],
         [14.6596, 53.5511]
-    ];
+    ];// npm install @deck.gl/core@8.9.36	 @deck.gl/layers@8.9.36	 @deck.gl/geo-layers@8.9.36	
 
     const fitBounds = (bounds, options = {}) => {
         // get mapElement width

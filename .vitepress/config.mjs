@@ -127,5 +127,9 @@ export default defineConfig({
         '@': '/src',
       },
     },
+    optimizeDeps: {
+      exclude: ['@deck.gl/core', '@deck.gl/layers', '@deck.gl/geo-layers']
+    },
+    assetsInclude: ['**/*.wgsl'],
   }
 })
