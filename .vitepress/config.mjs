@@ -7,6 +7,7 @@ export default defineConfig({
   lang: 'de-DE',
   description: "Landeskompetenzzentrum Forst Eberswalde",
   //base: '/FUK-Info-Dashboard/',
+  //base: '',
   search: {
     provider: 'local'
   },
