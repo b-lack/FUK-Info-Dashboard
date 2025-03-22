@@ -3,6 +3,8 @@
     "@deck.gl/core": "^8.9.36",
     "@deck.gl/geo-layers": "^8.9.36",
     "@deck.gl/layers": "^8.9.36",
+    "@deck.gl/extensions": "^8.9.36",
+    "@deck.gl/aggregation-layers": "^8.9.36",
     "@mdi/font": "^7.4.47",
     "@supabase/supabase-js": "^2.49.1",
     "@turf/turf": "^7.2.0",
