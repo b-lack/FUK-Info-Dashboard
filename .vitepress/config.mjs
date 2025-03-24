@@ -25,6 +25,10 @@ export default defineConfig({
         {text: 'ICP Forests', link: 'dauerbeobachtung/icp-forests/meteo'},
         {text: 'Level II', link: 'dauerbeobachtung/level-ii/beerenbusch-kiefer_1202'}
       ]},
+      { text: 'Untersuchung', items:[
+        {text: 'Trockenstress', link: 'untersuchung/trockenstress/trockenstress'},
+        {text: 'Vegetationszeit', link: 'untersuchung/vegetationszeit/vegetationszeit'}
+      ]},
       { text: 'API', link: '/api/getting_started'}
     ],
 
@@ -35,17 +39,6 @@ export default defineConfig({
           items: [
             { text: 'Aufgaben', link: '/allgemeines/aufgaben' },
             { text: 'Struktur', link: '/allgemeines/struktur' }
-          ]
-        }
-      ],
-      '/level_1/': [
-        {
-          text: 'Level I',
-          items: [
-            { text: 'Lage & Methode', link: '/level_1/lage_methode' },
-            { text: 'Bodenzustandserhebung', link: '/level_1/bodenzustandserhebung' },
-            { text: 'Waldzustandserhebung', link: '/level_1/waldzustandserhebung' },
-            { text: 'Waldinventur', link: '/level_1/waldinventur' }
           ]
         }
       ],
@@ -80,6 +73,15 @@ export default defineConfig({
           text: 'Level II',
           items: [
             { text: 'Beerenbusch Kiefer - 1202', link: '/dauerbeobachtung/level-ii/beerenbusch-kiefer_1202' }
+          ]
+        }
+      ],
+      '/untersuchung/': [
+        {
+          text: 'Untersuchungen',
+          items: [
+            { text: 'Trockenstress', link: '/untersuchung/trockenstress/trockenstress' },
+            { text: 'Vegetationszeit', link: '/untersuchung/vegetationszeit/vegetationszeit' }
           ]
         }
       ],
