@@ -1,0 +1,1 @@
+Die seit 1996 betriebene Dauerbeobachtungsfläche "Beerenbusch Kiefer" (1202) befindet sich im Wuchsgebiet Mittelmecklenburger-Jungmoränenland auf Tasdorfer Sand-Braunerde. Die natürliche Waldgesellschaft ist der Schattblumen-Eichen-Buchen-Wald.
