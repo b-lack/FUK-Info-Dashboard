@@ -82,7 +82,7 @@ export default defineConfig({
           items: [
             { text: 'Trockenstress', link: '/untersuchung/trockenstress/trockenstress' },
             { text: 'Vegetationszeit', link: '/untersuchung/vegetationszeit/vegetationszeit' }
-          ]api/dictionary
+          ]
         }
       ],
       '/api/': [
