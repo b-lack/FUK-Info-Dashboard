@@ -15,7 +15,7 @@ export default defineConfig({
     logo: '/lfe-logo.svg',
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Allgemeines', link: '/allgemeines/aufgaben'},
+      { text: 'Allgemeines', link: '/allgemeines/info'},
       { text: 'Inventuren', items:[
         {text: 'Bodenzustandserhebung', link: 'inventur/bodenzustandserhebung/bodenzustandserhebung'},
         {text: 'Landeswaldinventur', link: 'inventur/landeswaldinventur/landeswaldinventur'},
