@@ -8,6 +8,7 @@ Auf der Intensitätsstufe Level II werden in Brandenburg von ursprünglich (1996
     import { createClient } from '@supabase/supabase-js';
     import { useTheme } from 'vuetify'
     import { useGlobalTheme } from '../../.vitepress/theme/composables/useGlobalTheme'
+    import TablePerPlot from '../../components/TablePerPlot.vue'
     const { isDark } = useGlobalTheme()
 
     const codePlot_list = [
@@ -57,17 +58,155 @@ Auf der Intensitätsstufe Level II werden in Brandenburg von ursprünglich (1996
         }
     }
     const parentHover = (info, tooltip) => {
-        console.log('Parent Map hovered:', );
+
         const code_plot = info.object.properties.code_plot;
         const plot = codePlot_list.find(item => item.code_plot === code_plot);
         if (plot) {
             tooltip.innerHTML = plot.name;
         } else {
             // If no plot found, you can set a default message or leave it empty
-            tooltip.innerHTML = 'No plot found';
+            tooltip.innerHTML = code_plot;
         }
     }
 
 </script>
 
 <Map ref="mapRef" :selectByClick="selectByClick" :parentHover="parentHover" ></Map>
+
+<div style="margin-top: 50px;"></div>
+<v-list-subheader>Komponenten des Energie- und Stoffhaushaltes</v-list-subheader>
+<v-table>
+    <thead>
+        <tr>
+            <th>Erhebungen</th>
+            <th>Level II Standard</th>
+            <th>Level II Core</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>Immission</td>
+        <td>kontinuierlich</td>
+        <td>-</td>
+        </tr>
+        <tr>
+        <td>Deposition</td>
+        <td>kontinuierlich</td>
+        <td>kontinuierlich</td>
+        </tr>
+        <tr>
+        <td>Meteorologie</td>
+        <td>kontinuierlich</td>
+        <td>kontinuierlich</td>
+        </tr>
+        <tr>
+        <td>Bodenzustand (Vorrat)</td>
+        <td>10-jährig</td>
+        <td>10-jährig</td>
+        </tr>
+        <tr>
+        <td>Bodenphysik</td>
+        <td>einmalig</td>
+        <td>einmalig</td>
+        </tr>
+            <tr>
+        <td>Bodenlösungschemie</td>
+        <td>-</td>
+        <td>kontinuierlich</td>
+        </tr>
+        <tr>
+        <td>Bodenwassergehalt</td>
+        <td>-</td>
+        <td>kontinuierlich</td>
+        </tr>
+        <tr>
+        <td>Grundwasser</td>
+        <td>-</td>
+        <td>[1]-jährlich</td>
+        </tr>
+        <tr>
+        <td>CO2 und H2O Flux-Messung</td>
+        <td>-</td>
+        <td>[2]-½ h</td>
+        </tr>
+    </tbody>
+</v-table>
+
+<div style="margin-top: 50px;"></div>
+<v-list-subheader>Biologische Systemreaktionen</v-list-subheader>
+<v-table>
+    <thead>
+        <tr>
+            <th>Erhebungen</th>
+            <th>Level II Standard</th>
+            <th>Level II Core</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Biomarker Vitaltät</td>
+            <td>-jährlich</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Kronenzustand</td>
+            <td>jährlich</td>
+            <td>jährlich</td>
+        </tr>
+        <tr>
+            <td>LAI</td>
+            <td>-2 x jährlich</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Phänologie</td>
+            <td>-täglich</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Bestandeswachstum</td>
+            <td>5 - jährig</td>
+            <td>5 - jährig</td>
+        </tr>
+        <tr>
+            <td>Einzelbaumwachstum</td>
+            <td>-jährlich, 14d, h</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Nadel-/Blattanalysen</td>
+            <td>jedes 2. Jahr</td>
+            <td>jährlich</td>
+        </tr>
+        <tr>
+            <td>Streufall</td>
+            <td>-kontinuierlich</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Bodenrespiration</td>
+            <td>[3]-14-tägig</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Bodenvegetation</td>
+            <td>5 - jährig</td>
+            <td>5 - jährig</td>
+        </tr>
+        <tr>
+            <td>Biotische Schaderreger</td>
+            <td>jährlich</td>
+            <td>jährlich</td>
+        </tr>
+        <tr>
+            <td>Ozonschäden</td>
+            <td>-jährlich</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Genmarker Baum</td>
+            <td>-einmalig</td>
+            <td>-</td>
+        </tr>
+    </tbody>
+</v-table>

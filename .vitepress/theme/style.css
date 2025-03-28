@@ -141,3 +141,13 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+table {
+  width: 100% !important;
+  margin: 0 !important;
+}
+th {
+  width: 100% !important;
+}
+td, th {
+  white-space: nowrap !important;
+}
