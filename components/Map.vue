@@ -9,10 +9,8 @@
     import {bboxPolygon, difference, featureCollection} from '@turf/turf';
     import { createClient } from '@supabase/supabase-js';
 
-    // Declare variables for deck.gl and turf modules
-    //let Deck, WebMercatorViewport, TRANSITION_EVENTS
-    //let GeoJsonLayer, BitmapLayer, ScatterplotLayer, TileLayer
-    //let bboxPolygon, difference, featureCollection
+    import { useGlobalTheme } from '../.vitepress/theme/composables/useGlobalTheme'
+    const { isDark } = useGlobalTheme()
 
     const instance = getCurrentInstance();
     const apikey = instance.appContext.config.globalProperties.$apikey;
@@ -20,6 +18,9 @@
     const supabase = createClient(url, apikey)
 
     const attrs = useAttrs();
+
+    const selectByClick = attrs.selectByClick;
+    const parentHover = attrs.parentHover;
 
     const mapElement = ref(null);
     const deckInstance = ref(null);
@@ -31,10 +32,12 @@
     ];// npm install @deck.gl/core@8.9.36	 @deck.gl/layers@8.9.36	 @deck.gl/geo-layers@8.9.36	
 
     const fitBounds = (bounds, options = {}) => {
+        if (!deckInstance.value) return;
+        if (!mapElement.value) return;
         // get mapElement width
         const mapViewState = mapElement.value.getBoundingClientRect();
 
-        let {longitude, latitude, zoom} = new WebMercatorViewport({ width: mapViewState.width-40, height: mapViewState.height-40 }).fitBounds(bounds)
+        let {longitude, latitude, zoom} = new WebMercatorViewport({ width: mapViewState.width, height: mapViewState.width*0.9 }).fitBounds(bounds)
         zoom = Math.min(zoom, 19);
 
         if(typeof bounds !== 'object' ) return;
@@ -90,8 +93,7 @@
         
         try {
             // Use await without .then() chain
-            const response = await supabase.schema('icp_download').from(table)
-                .select(`${uniquenessColumn}, ${latitudeColumn}, ${longitudeColumn}, ${dataColumn}`);
+            const response = await supabase.schema('icp_download').from(table).select(`*`);
             
             if (response.error) {
                 console.error('Error loading data:', response.error);
@@ -121,7 +123,8 @@
                         coordinates: [lon, lat]
                     },
                     properties: {
-                        value: item[dataColumn]
+                        ...item,
+                        highlighted: item[dataColumn],
                     }
                 });
             }
@@ -134,7 +137,7 @@
                 getFillColor: [70, 119, 76],
                 pickable: true,
                 radiusMinPixels: 5,
-                radiusMaxPixels: 5,
+                radiusMaxPixels: 15,
             });
             
             const layers = deckInstance.value.props.layers;
@@ -193,48 +196,76 @@
                 console.error('Error loading GeoJSON:', error);
             });
         const layers = deckInstance.value.props.layers;
+
         layers[1] = new GeoJsonLayer({
                     id: 'mask-layer-0_8',
                     data: polyMask(bbMask.value),
-                    getFillColor: [27,27,31,255],
+                    getFillColor: isDark.value ? [27,27,31,255] : [255, 255, 255, 255],
                     stroked: false,
                     extruded: false,
                     wireframe: true,
                     lineJointRounded: true,
                 });
-        /*deckInstance.value.setProps({
-            layers
-        });*/
+        deckInstance.value.setProps({
+            layers: [...layers]
+        });
     }
+
+    
+    
+
+    function getTooltip({object, x, y}) {
+        if(!object) {
+            tooltip.style.display = 'none';
+            return;
+        }
+        tooltip.style.display = 'block';
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${y}px`;
+        if (parentHover && object?.properties) {
+            parentHover({object, x, y}, tooltip);
+        }else if(object?.properties?.highlighted) {
+            tooltip.innerText = object?.properties.highlighted;
+        }
+    }
+
+    
+    let onClick = (info, event) => {
+        if(selectByClick) {
+            selectByClick(info, event);
+        }
+    };
     
     onMounted(async () => {
-        // Dynamically import deck.gl and turf
-        /*console.log('starting import');
-        const deck = await import('@deck.gl/core')
-        console.log('sdfsf');
-        const layers = await import('@deck.gl/layers')
-        const geoLayers = await import('@deck.gl/geo-layers')
-        //const turf = await import('@turf/turf')
-
-        Deck = deck.Deck
-        WebMercatorViewport = deck.WebMercatorViewport
-        TRANSITION_EVENTS = deck.TRANSITION_EVENTS
-        GeoJsonLayer = layers.GeoJsonLayer
-        BitmapLayer = layers.BitmapLayer
-        ScatterplotLayer = layers.ScatterplotLayer
-        TileLayer = geoLayers.TileLayer*/
-        //bboxPolygon = turf.bboxPolygon
-        //difference = turf.difference
-        //featureCollection = turf.featureCollection
-
+        const tooltip = document.createElement('div');
+        tooltip.style.position = 'absolute';
+        tooltip.style.zIndex = 1;
+        tooltip.style.pointerEvents = 'none';
+        tooltip.style.backgroundColor = isDark.value ? 'rgba(27,27,31,0.8)' : 'rgba(255, 255, 255, 0.8)';
+        tooltip.style.color = isDark.value ? 'white' : 'black';
+        tooltip.style.padding = '5px';
+        tooltip.style.borderRadius = '5px';
+        tooltip.style.display = 'none';
+        mapElement.value.appendChild(tooltip);
+        
         deckInstance.value = new Deck({
             mapStyle: 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json',
             parent: mapElement.value,
+            style: {
+                position: 'relative',
+                aspectRatio: 1,
+                width: '100%',
+            },
             initialViewState: INITIAL_VIEW_STATE,
             controller: false,
-            onLoad: () => {
-                fitBounds(boundingBox);
+            onResize: () => {
+                setTimeout(() => {
+                    fitBounds(boundingBox);
+                }, 100);
+                
             },
+            onClick,
+            getTooltip,
             layers: [
                 new TileLayer({
                     id: 'tile-layer',
@@ -272,5 +303,7 @@
 
 
 <template>
-    <div ref="mapElement" style="aspect-ratio: 1;"></div>
+    <div  style="position:relative">
+    <div ref="mapElement"></div>
+    </div>
 </template>

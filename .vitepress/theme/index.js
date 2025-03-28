@@ -1,7 +1,9 @@
 // https://vitepress.dev/guide/custom-theme
-import { h, watch } from 'vue'
+import { h, watch, ref } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import { useData } from 'vitepress'
+import { isDark } from './composables/useGlobalTheme'
+
 import './style.css'
 
 // Vuetify
@@ -48,18 +50,22 @@ const vuetify = createVuetify({
 const apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w';
 let url = 'https://db.forstliche-umweltkontrolle.de:8443';
 
+// Create a shared reactive isDark ref
+const globalIsDark = ref(false)
+
 /** @type {import('vitepress').Theme} */
 export default {
   extends: DefaultTheme,
   Layout: () => {
     // Get VitePress theme data
-    const { isDark } = useData()
+    const { isDark: vitePressDark } = useData()
 
-    // Watch for theme changes and update Vuetify
+    // Watch for theme changes and update Vuetify and global isDark
     watch(
-      () => isDark.value,
+      () => vitePressDark.value,
       (newIsDark) => {
         vuetify.theme.global.name.value = newIsDark ? 'dark' : 'light'
+        isDark.value = newIsDark // Update our composable's isDark value
       },
       { immediate: true }
     )
@@ -80,5 +86,6 @@ export default {
     if (isDark.value) {
       vuetify.theme.global.name.value = 'dark'
     }
+    globalIsDark.value = isDark.value
   }
 }

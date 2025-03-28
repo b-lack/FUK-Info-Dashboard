@@ -23,7 +23,7 @@ export default defineConfig({
       ]},
       { text: 'Dauerbeobachtung', items:[
         {text: 'ICP Forests', link: 'dauerbeobachtung/icp-forests/meteo'},
-        {text: 'Level II', link: 'dauerbeobachtung/level-ii/beerenbusch-kiefer_1202'}
+        {text: 'Level II', link: 'dauerbeobachtung/level-ii'}
       ]},
       { text: 'Untersuchung', items:[
         {text: 'Trockenstress', link: 'untersuchung/trockenstress/trockenstress'},
@@ -71,8 +71,18 @@ export default defineConfig({
         },
         {
           text: 'Level II',
+          link: '/dauerbeobachtung/level-ii',
           items: [
-            { text: 'Beerenbusch Kiefer - 1202', link: '/dauerbeobachtung/level-ii/beerenbusch-kiefer_1202' }
+            { text: 'Grünewald - 1101', link: '/dauerbeobachtung/level-ii/grunewald_1101' },
+            { text: 'Natteheide - 1201', link: '/dauerbeobachtung/level-ii/natteheide_1201' },
+            { text: 'Beerenbusch Kiefer - 1202', link: '/dauerbeobachtung/level-ii/beerenbusch-kiefer_1202' },
+            { text: 'Kienhorst - 1203', link: '/dauerbeobachtung/level-ii/kienhorst_1203' },
+            { text: 'Weitzgrund - 1204', link: '/dauerbeobachtung/level-ii/weitzgrund_1204' },
+            { text: 'Neusorgefeld - 1205', link: '/dauerbeobachtung/level-ii/neusorgefeld_1205' },
+            { text: 'Schwenow - 1206', link: '/dauerbeobachtung/level-ii/schwenow_1206' },
+            { text: 'Beerenbusch Buchen - 1207', link: '/dauerbeobachtung/level-ii/beerenbusch_buchen_1207' },
+            { text: 'Fünfeichen - 1208', link: '/dauerbeobachtung/level-ii/fuenfeichen_1208' },
+            { text: 'Kienhorst Eichen - 1209', link: '/dauerbeobachtung/level-ii/kienhorst_eichen_1209' }
           ]
         }
       ],
