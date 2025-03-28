@@ -25,6 +25,8 @@
     const mapElement = ref(null);
     const deckInstance = ref(null);
     const bbMask = ref(null);
+    let tooltip = null;
+    
     const INERTIA_EASING = t => 1 - (1 - t) * (1 - t);
     const boundingBox = [
         [12.0833, 51.3411],
@@ -237,7 +239,7 @@
     };
     
     onMounted(async () => {
-        const tooltip = document.createElement('div');
+        tooltip = document.createElement('div');
         tooltip.style.position = 'absolute';
         tooltip.style.zIndex = 1;
         tooltip.style.pointerEvents = 'none';
@@ -247,7 +249,7 @@
         tooltip.style.borderRadius = '5px';
         tooltip.style.display = 'none';
         mapElement.value.appendChild(tooltip);
-        
+
         deckInstance.value = new Deck({
             mapStyle: 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json',
             parent: mapElement.value,
