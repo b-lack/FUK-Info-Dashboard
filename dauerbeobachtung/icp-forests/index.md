@@ -1,0 +1,5 @@
+# ICP Forests
+
+Das Monitoringprogram [ICP Forests](http://icp-forests.net/) wurde im Jahr 1985 im Rahmen des [Genfer Luftreinhalteabkommen](https://unece.org/environmental-policy-1/air) verabschiedet. Deutschland ist hier das Vorsitzland mit [Programmkoordination am Thünen-Institut für Waldökosysteme](https://www.thuenen.de/de/fachinstitute/waldoekosysteme/projekte/pcc-des-icp-forests/projekte-des-icp-forests/programmkoordinierungszentrum-pcc-von-icp-forests).
+
+Das [forstliche Umnweltmonitoring in Deutschland](https://blumwald.thuenen.de/) ist Bestandteil von [ICP Forests](http://icp-forests.net/) und wird ebenfalls am [Thünen-Institut für Waldökosysteme](https://www.thuenen.de/de/fachinstitute/waldoekosysteme) in Eberswalde koordiniert. und umfasst die wiederholten extensiven Rasternetz-Inventuren ([Boden-](https://blumwald.thuenen.de/bze) und [Waldzustandserhebung](https://blumwald.thuenen.de/wze), Level I) und das [intensivem forstlichem Umweltmonitoring](https://blumwald.thuenen.de/level-ii) (Level II).

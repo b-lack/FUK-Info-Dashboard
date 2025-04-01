@@ -111,9 +111,9 @@ export default defineConfig({
           ]
         },
         {
-          text: 'Für angemeldete Nutzer',
+          text: 'Authenticated Users',
           items: [
-            { text: 'Daten manipulieren', link: '/api/authentication' },
+            { text: 'Data processing', link: '/api/authentication' },
           ]
         }
       ]
