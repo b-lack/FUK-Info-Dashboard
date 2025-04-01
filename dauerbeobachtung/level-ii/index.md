@@ -24,7 +24,6 @@ Auf der Intensitätsstufe Level II werden in Brandenburg von ursprünglich (1996
         { code_plot: 1209, name: 'Kienhorst Eichen', link: '/dauerbeobachtung/level-ii/kienhorst_eichen_1209' }
     ];
 
-
     const theme = useTheme()
     const instance = getCurrentInstance();
     const apikey = instance.appContext.config.globalProperties.$apikey;
@@ -50,7 +49,6 @@ Auf der Intensitätsstufe Level II werden in Brandenburg von ursprünglich (1996
         if (code_plot) {
             // goto
             const plot = codePlot_list.find(item => item.code_plot === code_plot);
-            
             if (plot) {
                 // Open the link in same tab
                 window.location.href = plot.link;
