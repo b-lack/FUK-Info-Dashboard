@@ -65,6 +65,7 @@ export default defineConfig({
       '/dauerbeobachtung/': [
         {
           text: 'ICP Forests',
+          link: '/dauerbeobachtung/icp-forests',
           items: [
             { text: 'Meteo', link: '/dauerbeobachtung/icp-forests/meteo'}
           ]
