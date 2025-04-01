@@ -8,7 +8,6 @@
     const rawPlots = [
         {
             "code_plot": 1201,
-            "Revier / Oberförsterei": "Königsberg/ Neustadt",
             "Niederschlag Jahr": 570,
             "Niederschlag Vegetationszeit": 320,
             "Makroklimaform": "beta",
@@ -23,13 +22,13 @@
         },
         {
             "code_plot": 1202,
-            "Revier / Oberförsterei": "Rheinsberg/ Neuruppin",
             "Niederschlag Jahr": 600,
             "Niederschlag Vegetationszeit": 344,
             "Makroklimaform": "my",
             "Höhenlage Freifläche / Bestand": "55 / 70",
             "natürliche Waldgesellschaft": "Schattblumen- Eichen- Buchen-Wald",
-            "Wuchsgebiet": "6 Mittelmecklenburger- Jungmoränenland",
+            "Wuchsgebiet": "6 Mittelmeckl            "Revier / Oberförsterei": "Saubucht/ FA Grunewald",
+enburger- Jungmoränenland",
             "Stamm Standortsgruppe": "M2f",
             "Lokal Bodenforms": "TdS Tasdorfer Sand- Braunerde",
             "Körnung im Oberboden": "anlehmiger Mittel- Feinsand",
@@ -38,7 +37,6 @@
         },
         {
             "code_plot": 1203,
-            "Revier / Oberförsterei": "Joachimstal/ Eberswalde",
             "Niederschlag Jahr": 585,
             "Niederschlag Vegetationszeit": 335,
             "Makroklimaform": "beta",
@@ -53,7 +51,6 @@
         },
         {
             "code_plot": 1204,
-            "Revier / Oberförsterei": "Brück/ Dippmannsdorf",
             "Niederschlag Jahr": 570,
             "Niederschlag Vegetationszeit": 320,
             "Makroklimaform": "epsilon",
@@ -68,7 +65,6 @@
         },
         {
             "code_plot": 1205,
-            "Revier / Oberförsterei": "Walddrehna/ Luckau",
             "Niederschlag Jahr": 570,
             "Niederschlag Vegetationszeit": 367,
             "Makroklimaform": "phi",
@@ -83,7 +79,6 @@
         },
         {
             "code_plot": 1206,
-            "Revier / Oberförsterei": "Storkow/ Erkner",
             "Niederschlag Jahr": 550,
             "Niederschlag Vegetationszeit": 309,
             "Makroklimaform": "gamma",
@@ -98,7 +93,6 @@
         },
         {
             "code_plot": 1207,
-            "Revier / Oberförsterei": "Rheinsberg/ Neuruppin",
             "Niederschlag Jahr": 600,
             "Niederschlag Vegetationszeit": 344,
             "Makroklimaform": "my",
@@ -113,7 +107,6 @@
         },
         {
             "code_plot": 1208,
-            "Revier / Oberförsterei": "Dammendorf/ Siehdichum",
             "Niederschlag Jahr": 533,
             "Niederschlag Vegetationszeit": 311,
             "Makroklimaform": "gamma",
@@ -128,7 +121,6 @@
         },
         {
             "code_plot": 1101,
-            "Revier / Oberförsterei": "Saubucht/ FA Grunewald",
             "Niederschlag Jahr": 571,
             "Niederschlag Vegetationszeit": 325,
             "Makroklimaform": "gamma",

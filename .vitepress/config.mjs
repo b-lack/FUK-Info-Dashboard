@@ -22,7 +22,7 @@ export default defineConfig({
         {text: 'Waldzustandserhebung', link: 'inventur/waldzustandserhebung/waldzustandserhebung'}
       ]},
       { text: 'Dauerbeobachtung', items:[
-        {text: 'ICP Forests', link: 'dauerbeobachtung/icp-forests/index'},
+        {text: 'ICP Forests', link: 'dauerbeobachtung/icp-forests'},
         {text: 'Level II', link: 'dauerbeobachtung/level-ii'}
       ]},
       { text: 'Untersuchung', items:[
