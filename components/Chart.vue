@@ -1,6 +1,6 @@
 <script setup>
 
-    import { ref, onMounted, useAttrs, watch, getCurrentInstance, onBeforeUnmount } from 'vue'
+    import { ref, onMounted, useAttrs, defineEmits, watch, getCurrentInstance, onBeforeUnmount } from 'vue'
     import * as echarts from 'echarts';
     import { createClient } from '@supabase/supabase-js';
 
@@ -15,9 +15,16 @@
     let myChart;
     const chartContainer = ref(null);
     const data = ref([]);
+    const series = ref([]);
+
     const dataMax = ref([]);
     const dataMin = ref([]);
     const dataRange = ref([]);
+
+    const emit = defineEmits(['update:variablesFilter'])
+    const existingVariables = ref([]);
+
+    const chartHeight = ref(500);
 
     function clearData() {
         data.value = [];
@@ -25,7 +32,18 @@
         dataMin.value = [];
         dataRange.value = [];
     }
+    /*function _getUniqueVariable(icpData){
+        // From Column code_variable
 
+        for (let i = 0; i < icpData.length; i++) {
+            const variable = icpData[i].code_variable;
+            console.log(variable);
+            if (!existingVariables.value.includes(variable)) {
+                existingVariables.value.push(variable);
+            }
+        }
+        emit('update:variablesFilter', existingVariables.value)
+    }*/
     function _parseData(icpData) {
         clearData();
         for (let i = 0; i < icpData.length; i++) {
@@ -40,20 +58,59 @@
         dataMax.value.sort((a, b) => a[0] - b[0]);
         dataMin.value.sort((a, b) => a[0] - b[0]);
         //dataRange.value.sort((a, b) => a[0] - b[0]);
+
+        series.value.push({
+            avg: data.value,
+            max: dataMax.value,
+            min: dataMin.value
+        });
     }
-    function _requestData(code_plot, code_variable) {
+    function _requestData(code_plot, code_variable, code_location) {
+        console.log(code_plot, code_variable, code_location);
         supabase
             .schema('icp_download')
             .from('mm_mem')
-            .select('date_observation, daily_max, daily_min, daily_mean')
+            .select('date_observation, daily_max, daily_min, daily_mean, code_variable, instrument_seq_nr')
             .eq('code_plot', code_plot)
-            .eq('code_variable', code_variable)
+            .eq('code_variable', code_variable.code)
+            .in('instrument_seq_nr', code_location.instrument_seq_nrs)
             .not('daily_max', 'is', null)
             .not('daily_min', 'is', null)
             .not('daily_mean', 'is', null)
             .then(response => {
-                _parseData(response.data)
+                // group resonse.data by instrument_seq_nr
+                const instrumentData = {};
+                response.data.forEach(item => {
+                    if (!instrumentData[item.instrument_seq_nr]) {
+                        instrumentData[item.instrument_seq_nr] = [];
+                    }
+                    instrumentData[item.instrument_seq_nr].push(item);
+                });
+                
+                // clear series
+                series.value = [];
+                // clear data
+                clearData();
+
+                Object.values(instrumentData).forEach((instrumentData) => {
+                    _parseData(instrumentData);
+                });
+               
+
+
                 myChart = echarts.init(chartContainer.value);
+
+
+                const seriesCount = series.value.length;
+                const maxSeriesCount = 4; // Maximum number of series to display
+                chartHeight.value = Math.min(maxSeriesCount, seriesCount) * (400 );
+
+                // set chart height
+                myChart.resize({
+                    height: chartHeight.value,
+                    width: chartContainer.value.clientWidth
+                });
+
                 _drawChart()
             })
             .catch(error => {
@@ -69,15 +126,15 @@
     };
 
     // Watch for changes in attrs.code_plot and attrs.code_variable
-    watch(() => [attrs.code_plot, attrs.code_variable], ([newPlot, newVariable]) => {
-        if (newPlot && newVariable) {
-            _requestData(newPlot, newVariable);
+    watch(() => [attrs.code_plot, attrs.code_variable, attrs.code_location], ([newPlot, newVariable, newCodeLocation]) => {
+        if (newPlot && newVariable && newCodeLocation) {
+            _requestData(newPlot, newVariable, newCodeLocation);
         }
     }, { deep: true });
 
     onMounted(async () => {
-        if(attrs.code_plot && attrs.code_variable) {
-            _requestData(attrs.code_plot, attrs.code_variable)            
+        if(attrs.code_plot && attrs.code_variable && attrs.code_location) {
+            _requestData(attrs.code_plot, attrs.code_variable, attrs.code_location);            
         }
 
         // Add resize event listener
@@ -94,16 +151,118 @@
     });
     
     
-
+    // https://echarts.apache.org/examples/en/editor.html?c=line-gradient&theme=dark
     function _drawChart() {
         // Update title with current attributes
-        option.title[0].text = `${attrs.code_variable_description['name']} in ${attrs.code_variable_description['unit']}`;
+        option.title[0].text = `${attrs.code_variable.description} in ${attrs.code_variable.unit}`;
         
-        // Update series data with reactive data
-        //option.series[0].data = dataMax.value;
-        //option.series[1].data = dataMin.value;
-        option.series[0].data = data.value;
-        option.series[0].name = attrs.code_variable_description['name'];
+        option.xAxis = [];
+        option.yAxis = [];
+        option.series = [];
+        option.grid = [];
+
+        // Series Count
+        const seriesCount = series.value.length;
+        const maxSeriesCount = 4; // Maximum number of series to display
+        const globalChartHeight = chartHeight.value - 150;
+        
+        series.value.forEach((item, index) => {
+            const gridIndex = index;
+
+            if(index > maxSeriesCount) {
+                return;
+            }
+
+            // Top position of the grid in Pixels
+            const top = 50 + index * (globalChartHeight / Math.min(maxSeriesCount, seriesCount) + 0) + 'px';
+            const height = (globalChartHeight / Math.min(maxSeriesCount, seriesCount)) - 50 + 'px';
+
+            option.grid.push({
+                left: 10,
+                top,
+                right: 10,
+                height,
+                containLabel: true
+            });
+
+            option.xAxis.push({
+                type: 'time',
+                gridIndex: gridIndex,
+                name: attrs.code_variable.description,
+                position: 'bottom',
+                axisLabel: {
+                    formatter: function (value, index) {
+                        return echarts.format.formatTime('yyyy-MM-dd', value);
+                    }
+                },
+                splitLine: {
+                    show: true
+                },
+                axisPointer: {
+                    label: {
+                        formatter: function (params) {
+                            return echarts.format.formatTime('yyyy-MM-dd', params.value);
+                        }
+                    }
+                }
+            });
+            option.yAxis.push({
+                type: 'value',
+                gridIndex: gridIndex,
+                //name: attrs.code_variable.unit,
+                position: 'left',
+                axisLabel: {
+                    formatter: '{value}'
+                },
+                splitLine: {
+                    show: true
+                },
+                axisPointer: {
+                    label: {
+                        formatter: function (params) {
+                            return params.value;
+                        }
+                    }
+                }
+            });
+
+            option.series.push({
+                name: `Max ${attrs.code_variable.description}`,
+                type: 'line',
+                symbol: 'circle',
+                data: item.max,
+                z: 1,
+                itemStyle: {
+                    color: 'rgba(0, 136, 255, 100)'
+                },
+                xAxisIndex: gridIndex,
+                yAxisIndex: gridIndex,
+            });
+            option.series.push({
+                name: `Avg ${attrs.code_variable.description}`,
+                type: 'line',
+                symbol: 'circle',
+                data: item.min,
+                z: 1,
+                itemStyle: {
+                    color: 'rgb(0, 136, 255)'
+                },
+                xAxisIndex: gridIndex,
+                yAxisIndex: gridIndex,
+            });
+            option.series.push({
+                name: `Min ${attrs.code_variable.description}`,
+                type: 'line',
+                symbol: 'circle',
+                data: item.min,
+                z: 1,
+                itemStyle: {
+                    color: 'rgba(0, 136, 255, 100)'
+                },
+                xAxisIndex: gridIndex,
+                yAxisIndex: gridIndex,
+            });
+        });
         
         myChart.setOption(option);
     }
@@ -157,14 +316,8 @@
                 saveAsImage: {}
             }
         },
-        xAxis: {
-            type: 'time',
-            //boundaryGap: false
-        },
-        yAxis: {
-            type: 'value',
-            //boundaryGap: [0, '100%']
-        },
+        xAxis: [],
+        yAxis: [],
         dataZoom: [
             {
                 type: 'inside',
@@ -179,25 +332,11 @@
             }
         ],
         
-        series: [
-            
-            
-            
-            {
-                name: 'Mean Temperature',
-                type: 'line',
-                symbol: 'circle',
-                data: data.value,
-                z: 2,
-                itemStyle: {
-                    color: 'rgb(255, 70, 131)'
-                },
-            },
-        ]
+        series: []
     };
     
 </script>
 
 <template>
-    <div ref="chartContainer" style="width: 100%; height:500px;"></div>
+    <div ref="chartContainer" style="width: 100%;"></div>
 </template>
