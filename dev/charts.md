@@ -5,7 +5,7 @@ layout: home
 
 <script setup>
   import Chart from '../components/Chart.vue'
-  import DvariableSelection from '../components/DvariableSelection.vue'
+  import DVariableSelection from '../components/DVariableSelection.vue'
   import DInstrumentSelection from '../components/DInstrumentSelection.vue'
   import { ref, onMounted } from 'vue'
 
@@ -60,7 +60,7 @@ layout: home
 <DInstrumentSelection :code_plot="code_plot" @update:codeLocation="code_location = $event"/>
 
 <!--Sensors-->
-<DvariableSelection :variablesFilter="variablesFilter" :code_plot="code_plot" :code_location="code_location" @update:codeVariable="code_variable = $event" />
+<DVariableSelection :variablesFilter="variablesFilter" :code_plot="code_plot" :code_location="code_location" @update:codeVariable="code_variable = $event" />
 
 <v-card class="my-4" style="overflow:visible;">
  <v-card-text>
