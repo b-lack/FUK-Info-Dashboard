@@ -1,5 +1,5 @@
 <script setup>
-    let apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w";
+    let apikey = "API key";
     //apikey = '[apikey]';
     let endpoint = "http://116.203.31.116:8000";
 </script>
@@ -23,7 +23,7 @@ password <- "fdo8zsdb3rfs"
 
 headers = c(
   'Content-Type' = 'text/plain',
-  'apikey' = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w'
+  'apikey' = 'API key'
 )
 
 body = paste0("{\n    \"email\": \"", email, "\",\n    \"password\": \"", password, "\"\n}")
@@ -48,7 +48,7 @@ Request data from table TEMPLATE with access token and apikey.
 ```R-vue
 # Request Data from table TEMPLATE
 headers = c(
-'apikey' = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w',
+'apikey' = 'API key',
 'Authorization' = paste("Bearer", access_token, sep = " "),
 'Accept-Profile' = 'fuk',
 'Content-Type' = 'text/csv'
@@ -74,7 +74,7 @@ body <- '[{"data": "ADDED 1"}, {"data": "ADDED 2"}]'
 
 
 headers = c(
-'apikey' = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w',
+'apikey' = 'API key',
 'Authorization' = paste("Bearer", access_token, sep = " "),
 'Content-Profile' = 'fuk',
 'Content-Type' = 'application/json'
