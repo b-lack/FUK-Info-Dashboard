@@ -17,6 +17,8 @@
     const data = ref([]);
     const series = ref([]);
 
+    const _loading = ref(false);
+
     const dataMax = ref([]);
     const dataMin = ref([]);
     const dataRange = ref([]);
@@ -24,7 +26,7 @@
     const emit = defineEmits(['update:variablesFilter'])
     const existingVariables = ref([]);
 
-    const chartHeight = ref(500);
+    const chartHeight = ref(600);
 
     function clearData() {
         data.value = [];
@@ -44,7 +46,7 @@
         }
         emit('update:variablesFilter', existingVariables.value)
     }*/
-    function _parseData(icpData) {
+    function _parseData(icpData, instrument_seq_nr) {
         clearData();
         for (let i = 0; i < icpData.length; i++) {
             const base = new Date(icpData[i].date_observation);
@@ -60,13 +62,17 @@
         //dataRange.value.sort((a, b) => a[0] - b[0]);
 
         series.value.push({
+            name: `Sensor ${instrument_seq_nr}`,
             avg: data.value,
             max: dataMax.value,
             min: dataMin.value
         });
     }
     function _requestData(code_plot, code_variable, code_location) {
-        console.log(code_plot, code_variable, code_location);
+        if(_loading.value) {
+            return;
+        }
+        _loading.value = true;
         supabase
             .schema('icp_download')
             .from('mm_mem')
@@ -92,8 +98,11 @@
                 // clear data
                 clearData();
 
-                Object.values(instrumentData).forEach((instrumentData) => {
-                    _parseData(instrumentData);
+                Object.values(instrumentData).forEach((_instrumentData) => {
+                    if(_instrumentData.length === 0) {
+                        return;
+                    }
+                    _parseData(_instrumentData, _instrumentData[0]["instrument_seq_nr"]);
                 });
                
 
@@ -103,18 +112,26 @@
 
                 const seriesCount = series.value.length;
                 const maxSeriesCount = 4; // Maximum number of series to display
-                chartHeight.value = Math.min(maxSeriesCount, seriesCount) * (400 );
+
+                console.log(seriesCount);
+                if(seriesCount == 0) {
+                    myChart.clear();
+                    _loading.value = false;
+                    return;
+                }
+                //chartHeight.value = Math.min(maxSeriesCount, seriesCount) * (400 );
 
                 // set chart height
                 myChart.resize({
                     height: chartHeight.value,
                     width: chartContainer.value.clientWidth
                 });
-
+                _loading.value = false;
                 _drawChart()
             })
             .catch(error => {
                 console.log(error)
+                _loading.value = false;
             })
     }
 
@@ -156,26 +173,36 @@
         // Update title with current attributes
         option.title[0].text = `${attrs.code_variable.description} in ${attrs.code_variable.unit}`;
         
-        option.xAxis = [];
-        option.yAxis = [];
+        //option.xAxis = [];
+        //option.yAxis = [];
         option.series = [];
         option.grid = [];
+        option.legend.data = [];
+        option.yAxis.name = attrs.code_variable.unit;
 
         // Series Count
         const seriesCount = series.value.length;
-        const maxSeriesCount = 4; // Maximum number of series to display
+
+        const maxSeriesCount = 1; // Maximum number of series to display
         const globalChartHeight = chartHeight.value - 150;
         
         series.value.forEach((item, index) => {
             const gridIndex = index;
 
-            if(index > maxSeriesCount) {
+            /*if(index > maxSeriesCount) {
                 return;
+            }*/
+
+            let topPadding = 60;
+            let bottomPadding = 90;
+            if(seriesCount > 1) {
+                option.legend.data.push(item.name);
+                topPadding = 70 + (Math.ceil(seriesCount / 8) * 22);
             }
 
             // Top position of the grid in Pixels
-            const top = 50 + index * (globalChartHeight / Math.min(maxSeriesCount, seriesCount) + 0) + 'px';
-            const height = (globalChartHeight / Math.min(maxSeriesCount, seriesCount)) - 50 + 'px';
+            const top = topPadding + index * (globalChartHeight / Math.min(maxSeriesCount, seriesCount) + 0) + 'px';
+            const height = (chartHeight.value - bottomPadding - topPadding) + 'px';
 
             option.grid.push({
                 left: 10,
@@ -185,7 +212,7 @@
                 containLabel: true
             });
 
-            option.xAxis.push({
+            /*option.xAxis.push({
                 type: 'time',
                 gridIndex: gridIndex,
                 name: attrs.code_variable.description,
@@ -224,9 +251,9 @@
                         }
                     }
                 }
-            });
+            });*/
 
-            option.series.push({
+            /*option.series.push({
                 name: `Max ${attrs.code_variable.description}`,
                 type: 'line',
                 symbol: 'circle',
@@ -237,20 +264,21 @@
                 },
                 xAxisIndex: gridIndex,
                 yAxisIndex: gridIndex,
-            });
+            });*/
             option.series.push({
-                name: `Avg ${attrs.code_variable.description}`,
+                name: item.name,
                 type: 'line',
+                smooth: true,
                 symbol: 'circle',
-                data: item.min,
+                data: item.avg,
                 z: 1,
-                itemStyle: {
+                /*itemStyle: {
                     color: 'rgb(0, 136, 255)'
-                },
-                xAxisIndex: gridIndex,
-                yAxisIndex: gridIndex,
+                },*/
+                //xAxisIndex: gridIndex,
+                //yAxisIndex: gridIndex,
             });
-            option.series.push({
+            /*option.series.push({
                 name: `Min ${attrs.code_variable.description}`,
                 type: 'line',
                 symbol: 'circle',
@@ -261,10 +289,10 @@
                 },
                 xAxisIndex: gridIndex,
                 yAxisIndex: gridIndex,
-            });
+            });*/
         });
         
-        myChart.setOption(option);
+        myChart.setOption(option, true);
     }
 
     const option = {
@@ -273,7 +301,13 @@
             position: function (pt) {
                 return [pt[0], '10%'];
             },
-            
+            formatter: function (params) {
+                let res = params[0].name + '<br/>';
+                params.forEach(item => {
+                    res += item.marker + item.seriesName + ': ' + parseFloat(item.value[1]).toFixed(2) + ' ' + attrs.code_variable.unit + '<br/>';
+                });
+                return res;
+            }
         },
         grid: {
             left: 50,
@@ -307,17 +341,22 @@
                 }
             }
         ],
+        legend: {
+            top: 40,
+            data: []
+        },
         toolbox: {
             feature: {
-                type: 'cross',
-                dataZoom: {
-                    yAxisIndex: 'none'
-                },
                 saveAsImage: {}
             }
         },
-        xAxis: [],
-        yAxis: [],
+        xAxis: {
+            type: 'time'
+        },
+        yAxis: {
+            type: 'value',
+            
+        },
         dataZoom: [
             {
                 type: 'inside',
@@ -338,5 +377,13 @@
 </script>
 
 <template>
-    <div ref="chartContainer" style="width: 100%;"></div>
+    <div class="relative">
+        <div v-if="_loading" class="position-absolute" style="top:0px; left:0px; width:100%; height:5px; z-index: 10; border-radius: 5px;">
+            <v-progress-linear
+                color="green"
+                indeterminate
+            ></v-progress-linear>
+        </div>
+        <div ref="chartContainer" style="width: 100%;"></div>
+    </div>
 </template>

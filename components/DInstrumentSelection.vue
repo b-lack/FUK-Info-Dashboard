@@ -82,7 +82,7 @@
                 v-for="location in locations" :key="location.code"
                 v-model="selected_location"
                 mandatory>
-                <v-btn :key="key" :value="location.code" @click="_setCodeLocation(location)">{{ location.description  }} ( {{ location.instrument_seq_nrs.length  }} Sensoren ) </v-btn>
+                <v-btn :key="key" :value="location.code" @click="_setCodeLocation(location)">{{ location.description  }}</v-btn>
             </v-btn-toggle>
         </div>
     </div>
