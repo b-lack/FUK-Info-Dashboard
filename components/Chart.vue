@@ -302,7 +302,7 @@
                 return [pt[0], '10%'];
             },
             formatter: function (params) {
-                let res = params[0].name + '<br/>';
+                let res = params[0].axisValueLabel + '<br/>';
                 params.forEach(item => {
                     res += item.marker + item.seriesName + ': ' + parseFloat(item.value[1]).toFixed(2) + ' ' + attrs.code_variable.unit + '<br/>';
                 });
