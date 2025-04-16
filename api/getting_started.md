@@ -18,7 +18,7 @@ The base URL for the API is `http://116.203.31.116:8000/rest/v1/`. All requests 
 The API requires an API key to be passed in the header of each request. The API key is a JSON Web Token (JWT) and is used to authenticate the user. The API key is passed in the `apikey` header.
 
 ::: warning Request the API Key
-Get your API key by contacting the [Landesbetrieb Forst Brandenburg](https://www.forst.brandenburg.de/).
+Get your API key by contacting the <Waldmonitoring@LFB.Brandenburg.de>.
 
 The API key should be kept secret and should not be shared with anyone. If you suspect that your API key has been compromised, you should generate a new one.
 :::
