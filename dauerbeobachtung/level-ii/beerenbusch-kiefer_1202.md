@@ -1,41 +1,27 @@
-# Beerenbusch Kiefer
-
-Die seit 1996 betriebene Dauerbeobachtungsfläche "Beerenbusch Kiefer" (1202) befindet sich im Wuchsgebiet Mittelmecklenburger-Jungmoränenland auf Tasdorfer Sand-Braunerde. Die natürliche Waldgesellschaft ist der Schattblumen-Eichen-Buchen-Wald.
-
 <script setup>
-    import Chart from '../../components/Chart.vue'
     import TablePerPlot from '../../components/TablePerPlot.vue'
     import { ref, onMounted } from 'vue'
 
     let code_plot = ref('1202');
-    let code_variable = ref('AT');
-
-    const plots = {
-        1201: {name: 'Natteheide'},
-        1202: {name: 'Beerenbusch'},
-        1203: {name: 'Kienhorst'},
-        1204: {name: 'Weitzgrund'},
-        1205: {name: 'Neusorgefeld'},
-        1206: {name: 'Schwenow'},
-        1207: {name: 'Beerenbusch Buchen'},
-        1208: {name: 'Fünfeichen'},
-        1209: {name: 'Kienhorst Eichen'}
-    };
-
-    const variables = {
-        //AP: {name: 'Atmospheric pressure', unit: 'hPa'},
-        AT: {name: 'Air temperature', unit: '°C'},
-        MP: {name: 'Soil Moisture Matric potential', unit: 'kPa'},
-        //PR: {name: 'Precipitation', unit: 'mm'},
-        RH: {name: 'Relative air humidity', unit: '%'},
-        //SR: {name: 'Global radiation', unit: 'W/m²'},
-        ST: {name: 'Soil temperature', unit: '°C'},
-        TF: {name: 'Throughfall', unit: 'mm'},
-        WC: {name: 'Water content', unit: 'Vol%'},
-        //WD: {name: 'Wind direction', unit: '°'},
-        WS: {name: 'Wind speed', unit: 'm/s'}
-    }
 </script>
-<Chart :code_plot="code_plot" :code_variable="code_variable" :code_plot_description="plots[code_plot]" :code_variable_description="variables[code_variable]"  />
+<v-card>
+    <v-img
+        src="/images/sensors.jpg"
+        class="align-end"
+        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+        height="200px"
+        cover
+    >
+        <v-card-title class="text-h5 font-weight-bold">
+            Beerenbusch Kiefer
+        </v-card-title>
+    </v-img>
+</v-card>
+
+Die seit 1996 betriebene Dauerbeobachtungsfläche "Beerenbusch Kiefer" (1202) befindet sich im Wuchsgebiet Mittelmecklenburger-Jungmoränenland auf Tasdorfer Sand-Braunerde. Die natürliche Waldgesellschaft ist der Schattblumen-Eichen-Buchen-Wald.
+
+## Meteo
+
+## Flächen-Details
 
 <TablePerPlot  :code_plot="code_plot" />

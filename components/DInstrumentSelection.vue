@@ -74,8 +74,7 @@
 </script>
 
 <template>
-    <div class="my-4" v-if="locations.length > 0">
-        <h5>Location</h5>
+    <div v-if="locations.length > 0">
         <div class="my-4 d-flex flex-wrap ga-3">
             <v-btn-toggle
                 rounded="xl"

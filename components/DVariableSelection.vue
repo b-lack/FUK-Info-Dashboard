@@ -19,6 +19,7 @@
     const emit = defineEmits(['update:codeVariable'])
 
     function _updateFilter(codePlot, codeLocation){
+        console.log(codeLocation)
         if(!codeLocation) {
             return;
         }
@@ -46,6 +47,7 @@
             .select('code, description, unit')
             .neq('code', 'XX')
             .then(response => {
+                console.log(response.data)
                 variables.value = response.data;
             })
             .catch(error => {
@@ -76,16 +78,15 @@
 </script>
 
 <template>
-    <div class="my-4">
-        <h5>Sensor</h5>
-        <div class="my-4 d-flex flex-wrap ga-3">
-            <v-btn-toggle
-                rounded="xl"
-                v-for="variable in filteredVariables" :key="variable.code"
-                v-model="code_variable"
-                mandatory>
-                <v-btn :key="key" :value="variable.code" @click="_setCodeVariable(variable)">{{ variable.description  }} [{{variable.unit}}] <sub>({{variablesFilterDetails[variable.code].row_count}} Werte)</sub></v-btn>
-            </v-btn-toggle>
-        </div>
+   
+    <div class="my-4 d-flex flex-wrap ga-3">
+        <v-btn-toggle
+            rounded="xl"
+            v-for="variable in filteredVariables" :key="variable.code"
+            v-model="code_variable"
+            mandatory>
+            <v-btn :key="key" :value="variable.code" @click="_setCodeVariable(variable)">{{ variable.description  }} [{{variable.unit}}]</v-btn>
+        </v-btn-toggle>
     </div>
+
 </template>

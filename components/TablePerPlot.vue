@@ -170,8 +170,7 @@
             </tbody>
         </v-table>
     </div>
-    <div v-else class="table-container" style="margin-top: 50px;">
-        <v-list-subheader>Plot Details</v-list-subheader>
+    <div v-else>
         <v-list>
             <v-list-item v-for="(value, key) in selectedPlot" :key="key">
                     <v-list-item-title>{{ key }}</v-list-item-title>

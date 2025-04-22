@@ -33,6 +33,7 @@ layout: home
     1208: {name: 'Fünfeichen'},
     1209: {name: 'Kienhorst Eichen'}
   };
+
   // https://icp-forests.org/documentation/Dictionaries/d_variable.html
 
   const _setCodePlot = (code) => {
@@ -65,8 +66,5 @@ layout: home
 <v-card class="my-4" style="overflow:visible;">
  <v-card-text>
   <Chart :code_plot="code_plot" :code_location="code_location" :code_variable="code_variable" :variablesFilter="variablesFilter" @update:variablesFilter="variablesFilter = $event"  />
-    <p>
-        Lufttemperatur Tagesmittel im Vergleich mit dem 68 % Quantil der in der Zeitreihe 1951-vergangenes Jahr an der Station gemessenen Tagesmitteltemperaturen (Tagesmittel +- Standardabweichung; [°C]).Normalwerte (1951 -2024) hier auch mit Extremwerten von 1951 -2024.
-    </p>
-    </v-card-text>
+  </v-card-text>
 </v-card>
