@@ -1,9 +1,8 @@
-# Kienhorst Eichen
-
 <script setup>
     import Chart from '../../components/Chart.vue'
     import TablePerPlot from '../../components/TablePerPlot.vue'
     import { ref, onMounted } from 'vue'
+    import Jumbo from '../../components/Jumbo.vue'
 
     let code_plot = ref('1209');
     let code_variable = ref('AT');
@@ -34,6 +33,11 @@
         WS: {name: 'Wind speed', unit: 'm/s'}
     }
 </script>
+
+<Jumbo image="/level2/1209-Kienhorst_Eichen_2_resized.jpg" titled="Kienhorst Eichen"/>
+
+## Meteo
 <Chart :code_plot="code_plot" :code_variable="code_variable" :code_plot_description="plots[code_plot]" :code_variable_description="variables[code_variable]"  />
 
+## Flächen-Details
 <TablePerPlot  :code_plot="code_plot" />

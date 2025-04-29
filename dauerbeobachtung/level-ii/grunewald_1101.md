@@ -1,8 +1,7 @@
-# Grünewald
-
 <script setup>
     import Chart from '../../components/Chart.vue'
     import TablePerPlot from '../../components/TablePerPlot.vue'
+    import Jumbo from '../../components/Jumbo.vue'
     import { ref, onMounted } from 'vue'
 
     let code_plot = ref('1101');
@@ -34,6 +33,13 @@
         WS: {name: 'Wind speed', unit: 'm/s'}
     }
 </script>
+
+<Jumbo image="/level2/1101-Grunewald_Bestand_resized.jpg" titled="Grünewald"/>
+
+## Meteo
+
 <Chart :code_plot="code_plot" :code_variable="code_variable" :code_plot_description="plots[code_plot]" :code_variable_description="variables[code_variable]"  />
+
+## Flächen-Details
 
 <TablePerPlot  :code_plot="code_plot" />
