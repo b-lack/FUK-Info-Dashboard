@@ -34,7 +34,7 @@
     }
 </script>
 
-<Jumbo image="/level2/1206-Schwenow_Freifläche_resized.jpg" titled="Schwenow"/>
+<Jumbo image="/level2/1206-Schwenow_Freiflaeche_resized.jpg" titled="Schwenow"/>
 
 ## Meteo
 <Chart :code_plot="code_plot" :code_variable="code_variable" :code_plot_description="plots[code_plot]" :code_variable_description="variables[code_variable]"  />

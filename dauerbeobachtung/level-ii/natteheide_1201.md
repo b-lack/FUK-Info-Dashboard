@@ -34,7 +34,7 @@
     }
 </script>
 
-<Jumbo image="/level2/1201-Natteheide_Freifläche_resized.jpg" titled="Natteheide"/>
+<Jumbo image="/level2/1201-Natteheide_Freiflaeche_resized.jpg" titled="Natteheide"/>
 
 ## Meteo
 <Chart :code_plot="code_plot" :code_variable="code_variable" :code_plot_description="plots[code_plot]" :code_variable_description="variables[code_variable]"  />
