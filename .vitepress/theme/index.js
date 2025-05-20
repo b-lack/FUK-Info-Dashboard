@@ -4,6 +4,19 @@ import DefaultTheme from 'vitepress/theme'
 import { useData } from 'vitepress'
 import { isDark } from './composables/useGlobalTheme'
 
+import DashboardButton from '../../components/DashboardButton.vue'
+
+let apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w';
+let url = 'https://db.forstliche-umweltkontrolle.de:8443';
+let rUrl = 'http://db.forstliche-umweltkontrolle.de:7005';
+
+// Local development
+if(import.meta.env.DEV) {
+  apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0';
+  url = 'http://127.0.0.1:54321';
+  rUrl = 'http://localhost:7005';
+}
+
 import './style.css'
 
 // Vuetify
@@ -47,9 +60,6 @@ const vuetify = createVuetify({
   }
 })
 
-const apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w';
-let url = 'https://db.forstliche-umweltkontrolle.de:8443';
-
 // Create a shared reactive isDark ref
 const globalIsDark = ref(false)
 
@@ -76,9 +86,11 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     app.use(vuetify)
+    app.component('DashboardButton', DashboardButton)
 
     app.config.globalProperties.$apikey = apikey
     app.config.globalProperties.$url = url;
+    app.config.globalProperties.$rUrl = rUrl;
   },
   setup() {
     // This ensures the theme is correct on initial load

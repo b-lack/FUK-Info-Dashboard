@@ -29,7 +29,8 @@ export default defineConfig({
         {text: 'Trockenstress', link: 'untersuchung/trockenstress/trockenstress'},
         {text: 'Vegetationszeit', link: 'untersuchung/vegetationszeit/vegetationszeit'}
       ]},
-      { text: 'API', link: '/api/getting_started'}
+      { text: 'API', link: '/api/getting_started'},
+      { component: 'DashboardButton'},
     ],
 
     sidebar: {
@@ -115,6 +116,21 @@ export default defineConfig({
           text: 'Authenticated Users',
           items: [
             { text: 'Data processing', link: '/api/authentication' },
+          ]
+        }
+      ],
+      '/dashboard/': [
+        {
+          text: 'User',
+          items: [
+            { text: 'Account', link: '/dashboard/profile' }
+          ]
+        },
+        {
+          text: 'R',
+          items: [
+            { text: 'Monitor', link: '/dashboard/r-monitor' },
+            { text: 'Functions', link: '/dashboard/r-api' },
           ]
         }
       ]
