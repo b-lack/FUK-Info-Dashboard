@@ -137,7 +137,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/Landeskompetenzzentrum-Forst-Eberswalde/FUK-ICP-Forest-Server' },
+      { icon: 'gitlab', link: 'https://gitlab.opencode.de/lfe/fuk/icp-forests/FUK-ICP-Forest-Server'}
     ],
     footer: {
       message: 'Service des <b>Landesbetrieb Forst Brandenburg</b>',
