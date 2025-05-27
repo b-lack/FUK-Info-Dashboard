@@ -8,7 +8,7 @@ import DashboardButton from '../../components/DashboardButton.vue'
 
 let apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzM4Nzk2NDAwLAogICJleHAiOiAxODk2NTYyODAwCn0.qnofsORUSwCd9Whx3XFbR56-k_ydI5DLDnV2AKxV37w';
 let url = 'https://db.forstliche-umweltkontrolle.de:8443';
-let rUrl = 'http://db.forstliche-umweltkontrolle.de:7005';
+let rUrl = 'http://db.forstliche-umweltkontrolle.de:7005'; // R Server URL (not needed currently due to CORS issues)
 
 // Local development
 /*if(import.meta.env.DEV) {

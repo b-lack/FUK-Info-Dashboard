@@ -2,6 +2,7 @@
     import Firewall from '../components/Firewall.vue';
     import { ref, onMounted, getCurrentInstance } from 'vue';
     import { createClient } from '@supabase/supabase-js';
+    import InviteForm from '../components/InviteForm.vue';
 
     const instance = getCurrentInstance();
     const apikey = instance.appContext.config.globalProperties.$apikey;
@@ -154,4 +155,7 @@
     <p style="text-align: center;">
         <button @click="logout">ABMELDEN</button>
     </p>
+
+# Invite new users
+<InviteForm></InviteForm>
 </Firewall>
