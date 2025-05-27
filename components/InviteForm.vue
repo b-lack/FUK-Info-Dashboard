@@ -18,8 +18,12 @@
     const getServiceKeyDialog = async () => {
         // This function can be used to fetch or display service keys if needed
         console.log('Fetching service key dialog...');
+        const serviceKey = prompt('Please enter the service key:');
+        if (!serviceKey) {
+            console.error('Service key is required');
+            return;
+        }
 
-        const serviceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogInNlcnZpY2Vfcm9sZSIsCiAgImlzcyI6ICJzdXBhYmFzZSIsCiAgImlhdCI6IDE3Mzg3OTY0MDAsCiAgImV4cCI6IDE4OTY1NjI4MDAKfQ.zYH20oDOb42KtAkq1aXz2o6rd06K7NjYJYUVqYay_6g';
         supabase = createClient(url, serviceKey);
         sendInvite();
     };
