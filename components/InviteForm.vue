@@ -21,6 +21,7 @@
         const serviceKey = prompt('Please enter the service key:');
         if (!serviceKey) {
             console.error('Service key is required');
+
             return;
         }
 
@@ -61,6 +62,8 @@
                     :rules="emailRules"
                     label="E-Mail Address des Einzuladenden"
                     required
+                    variant="outlined"
+                    rounded="xl"
                 ></v-text-field>
                 <v-btn
                     color="primary"
