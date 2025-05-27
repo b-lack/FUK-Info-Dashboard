@@ -91,7 +91,7 @@
         window.location.href = './change-email';
     };
     const _toChangePassword = () => {
-        window.location.href = './reset-password';
+        window.location.href = '/authentication/reset-password';
     };
 
     const logout = async () => {
