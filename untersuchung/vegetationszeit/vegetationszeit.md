@@ -27,22 +27,6 @@ layout: page
 
 <div class="mx-4 my-4 vp-doc mb-9">
     <h1>Vegetationszeit</h1>
-    <div class="my-9">
-        <h5>
-            <v-icon class="mr-2" size="20">mdi-map-marker-distance</v-icon>
-            Probeflächen
-        </h5>
-        <div class="my-4 d-flex flex-wrap ga-3">
-            <v-btn-toggle
-                rounded="xl"
-                v-for="(value, key) in plots" :key="key"
-                v-model="code_plot"
-                mandatory
-            >
-                <v-btn :key="key" :value="key" @click="_setCodePlot(key)">{{ value.name }}</v-btn>
-            </v-btn-toggle>
-        </div>
-    </div>
     <v-card class="my-4" style="overflow:visible;">
         <v-card-text>
             <BarPerYear :code_plot="code_plot"/>

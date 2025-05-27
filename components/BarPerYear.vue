@@ -14,34 +14,77 @@
     let myChart;
     const chartContainer = ref(null);
 
-    function _parseData(icpData) {
-        // group By Year
-        const groupedData = icpData.reduce((acc, item) => {
-            const year = item.survey_year;
-            if (!acc[year]) {
-                acc[year] = [];
-            }
-            acc[year].push(item);
-            return acc;
-        }, {});
+    const xAxisData = ref([]);
+    const seriesData = ref([]);
 
-        return Object.entries(groupedData).map(([year, items]) => {
+    const plots = {
+        1101: {name: 'Grunewald'},
+        1201: {name: 'Natteheide'},
+        1202: {name: 'Beerenbusch'},
+        1203: {name: 'Kienhorst'},
+        1204: {name: 'Weitzgrund'},
+        1205: {name: 'Neusorgefeld'},
+        1206: {name: 'Schwenow'},
+        1207: {name: 'Beerenbusch Buchen'},
+        1208: {name: 'Fünfeichen'},
+        1209: {name: 'Kienhorst Eichen'}
+    };
+
+    function _parseData(icpData) {
+
+        // xAxis by grouped survey_year
+        const xAxis = icpData.reduce((acc, item) => {
+            if (!acc.includes(item.survey_year)) {
+                acc.push(item.survey_year);
+            }
+            return acc;
+        }, []).sort((a, b) => a - b);
+        xAxisData.value = xAxis;
+
+        // seriesData array by code_plot
+        const series = {};
+        icpData.forEach(item => {
+            if (!series[item.code_plot]) {
+                series[item.code_plot] = {};
+            }
+            if (!series[item.code_plot][item.survey_year]) {
+                series[item.code_plot][item.survey_year] = {
+                    count_fruit_assess: 0,
+                    count: 0,
+                };
+            }
+            series[item.code_plot][item.survey_year].count += 1;
+            series[item.code_plot][item.survey_year].count_fruit_assess += (item.code_fruit_assess === 2 || item.code_fruit_assess === 3) ? 1 : 0;
+        });
+        console.log(series);
+        seriesData.value = Object.keys(series).map(code_plot => {
+            const data = [];
+            Object.keys(series[code_plot]).forEach(year => {
+                const percentage = (series[code_plot][year].count_fruit_assess / series[code_plot][year].count) * 100;
+                data.push({
+                    value: percentage.toFixed(2),
+                    name: year,
+                    code_plot: code_plot
+                });
+            });
+            console.log(data);
             return {
-                year: year,
-                count: items.length,
-                code_fruit_assess_2_or_3: items.filter(item => item.code_fruit_assess === 2 || item.code_fruit_assess === 3).length,
-                code_fruit_assess: items.map(item => item.code_fruit_assess)
+                name: code_plot,
+                type: 'bar',
+                //stack: 'total',
+                data: data.sort((a, b) => a.name - b.name), // Sort by year
             };
         });
+        
     }
 
     function _requestData(code_plot, code_variable, code_location) {
 
         supabase.schema('icp_download')
             .from('cc_trc')
-            .select('code_fruit_assess, survey_year')
+            .select('code_fruit_assess, survey_year, code_plot')
             .lt('code_removal', 10)
-            .eq('code_plot', code_plot)
+            //.eq('code_plot', code_plot)
             //.or('code_fruit_assess.eq.2,code_fruit_assess.eq.3')
             .then(({ data, error }) => {
                 if (error) {
@@ -53,8 +96,7 @@
                     console.warn('No data found for the given parameters.');
                     return;
                 }
-                const res = _parseData(data);
-                console.log('Parsed data:', res);
+                _parseData(data);
 
                 const option = {
                     title: [
@@ -90,7 +132,6 @@
                         },
                         formatter: function (params) {
                             let res = params[0].axisValueLabel + '<br/>';
-                            console.log(params);
                             params.forEach(item => {
                                 res += item.marker + item.seriesName + ': ' + parseFloat(item.value).toFixed(2) + ' %<br/>';
                             });
@@ -98,8 +139,8 @@
                         }
                     },
                     legend: {
-                        top: 40,
-                        data: []
+                        top: 0,
+                        data: seriesData.value.map(item => item.name),
                     },
                     grid: {
                         left: 50,
@@ -110,23 +151,24 @@
                     xAxis: {
                         type: 'category',
                         name: 'Year',
-                        data: res.map(item => item.year),
+                        data: xAxisData.value,
                     },
                     yAxis: {
                         type: 'value'
                     },
-                    series: [
-                        {
-                        data: res.map(item => item.code_fruit_assess_2_or_3 / item.count * 100),
-                        name: 'Fruit Assess 2 or 3 (%)',
-                        type: 'bar'
-                        }
-                    ],
+                    series: seriesData.value,
                     toolbox: {
                         feature: {
                             saveAsImage: {}
                         }
                     },
+                    dataZoom: [
+                        {
+                            start: 65,
+                            end: 100,
+                            bottom: 40
+                        }
+                    ],
                 };
                 myChart.setOption(option, true);
                 
@@ -137,7 +179,6 @@
     }
 
     watch(() => [attrs.code_plot, attrs.code_variable, attrs.code_location], ([newPlot, newVariable, newCodeLocation]) => {
-        console.log(newPlot);
         if (newPlot) {
             _requestData(newPlot, newVariable, newCodeLocation);
         }
