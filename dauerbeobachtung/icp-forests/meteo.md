@@ -44,7 +44,7 @@ layout: page
 
 <div class="mx-4 my-4 vp-doc mb-9">
     <h1>Meteo</h1>
-    
+
 <div class="my-9">
     <h5>
         <v-icon class="mr-2" size="20">mdi-map-marker-distance</v-icon>

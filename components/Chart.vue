@@ -113,7 +113,6 @@
                 const seriesCount = series.value.length;
                 const maxSeriesCount = 4; // Maximum number of series to display
 
-                console.log(seriesCount);
                 if(seriesCount == 0) {
                     myChart.clear();
                     _loading.value = false;
