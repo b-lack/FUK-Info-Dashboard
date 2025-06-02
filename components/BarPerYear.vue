@@ -78,7 +78,7 @@
         
     }
 
-    function _requestData(code_plot, code_variable, code_location) {
+    function _requestData() {
 
         supabase.schema('icp_download')
             .from('cc_trc')
@@ -102,7 +102,7 @@
                     title: [
                         {
                             left: 'left',
-                            text: `Vegetationszeit`,  // Title text - use from attrs if available
+                            text: ``,  // Title text - use from attrs if available
                         },
                         {
                             left: 'left',
@@ -178,16 +178,9 @@
             });
     }
 
-    watch(() => [attrs.code_plot, attrs.code_variable, attrs.code_location], ([newPlot, newVariable, newCodeLocation]) => {
-        if (newPlot) {
-            _requestData(newPlot, newVariable, newCodeLocation);
-        }
-    }, { deep: true });
-
+    
     onMounted(async () => {
-        if(attrs.code_plot) {
-            _requestData(attrs.code_plot, attrs.code_variable, attrs.code_location);            
-        }
+        _requestData();
 
         // Add resize event listener
         window.addEventListener('resize', handleResize);
