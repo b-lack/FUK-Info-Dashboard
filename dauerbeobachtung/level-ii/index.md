@@ -1,5 +1,7 @@
 # Level II
 
+Das [forstliche Umnweltmonitoring in Deutschland](https://blumwald.thuenen.de/) ist Bestandteil von ICP Forests und wird am [Thünen-Institut für Waldökosysteme](https://www.thuenen.de/de/fachinstitute/waldoekosysteme) in Eberswalde koordiniert. Bei regelmäßigen Treffen der Bund-Länder-Arbeitsgruppen werden Aufnahmeanweisungen für das [intensive forstliche Umweltmonitoring](https://blumwald.thuenen.de/level-ii) (Level II) erarbeitet und abgestimmt.
+
 Auf der Intensitätsstufe Level II werden in Brandenburg von ursprünglich (1996-2007) 6 Kiefernbeständen (1201-1206) gegenwärtig noch 4 (1202-1204) im Rahmen des ICP-Forests, sowie zusätzlich eine Buchen- (1207) und zwei Eichenbestände (1208, 1209) beobachtet. Im Land Berlin ist ein Kiefern-/Eichen-Altbestand (1101) im Grunewald noch in das Level II Programm einbezogen. Die Beobachtung des benachbarten Kiefernjungbestandes (1102) und eines Kiefernbestandes in Köpenick (1103) werden seit 2003 nur noch extensiv fortgeführt. Die Erhebungen erfolgen durch das Landeskompetenzzentrum Forst Eberswalde (LFE) mit Unterstützung durch die örtlichen Revierförster.
 
 <script setup>
