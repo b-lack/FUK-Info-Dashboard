@@ -68,8 +68,8 @@ export default defineConfig({
           text: 'ICP Forests',
           link: '/dauerbeobachtung/icp-forests/index',
           items: [
-            { text: 'mm', link: '/dauerbeobachtung/icp-forests/meteo'},
-            { text: 'cc', link: '/dauerbeobachtung/icp-forests/crown_condition' },
+            { text: 'MM', link: '/dauerbeobachtung/icp-forests/meteo'},
+            { text: 'CC', link: '/dauerbeobachtung/icp-forests/crown_condition' },
           ]
         },
         {
