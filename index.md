@@ -18,11 +18,6 @@ hero:
       text: Daten selber nutzen
       link: /api/getting_started
 features:
-  - title: Meteo
-    details: >-
-      <span class="para">
-        Lufttemperatur Tagesmittel im Vergleich mit dem 68 % Quantil der in der Zeitreihe 1951-vergangenes Jahr an der Station gemessenen Tagesmitteltemperaturen
-      </span>
-    link: 'dauerbeobachtung/icp-forests/meteo'
+ 
 ---
 
