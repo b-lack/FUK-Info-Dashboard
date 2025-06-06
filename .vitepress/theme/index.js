@@ -11,11 +11,11 @@ let url = 'https://db.forstliche-umweltkontrolle.de:8443';
 let rUrl = 'http://db.forstliche-umweltkontrolle.de:7005'; // R Server URL (not needed currently due to CORS issues)
 
 // Local development
-/*if(import.meta.env.DEV) {
-  apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0';
-  url = 'http://127.0.0.1:54321';
-  rUrl = 'http://localhost:7005';
-}*/
+//if(import.meta.env.DEV) {
+//  apikey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0';
+//  url = 'http://127.0.0.1:54321';
+//  rUrl = 'http://localhost:7005';
+//}
 
 import './style.css'
 
