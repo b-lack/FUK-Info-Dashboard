@@ -17,6 +17,16 @@
     const scripts = ref([]);
 
     const _getScripts = async () => {
+
+        // Use the path-based approach: /functions/v1/r-proxy/get-scripts
+        const { data, error } = await supabase.functions.invoke('get-scripts');
+        if (error) {
+            console.error('Error invoking function:', error);
+            return [];
+        }
+        console.log('Function invoked successfully:', data);
+        return data?.data || [];
+/*
         const { data: sessionData, error } = await supabase.auth.getSession();
         if (error) {
             console.error('Error getting session:', error);
@@ -47,17 +57,34 @@
         } catch (error) {
             console.error('Error fetching scripts:', error);
             return [];
-        }
+        }*/
     };
 
     const _runScript = async () => {
+        // Get the user's session to forward the auth token
+        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) {
+            console.error('Error getting session:', sessionError);
+            return;
+        }
+        if (!sessionData.session || !sessionData.session.access_token) {
+            console.error('No session found');
+            return;
+        }
+
         const { data, error } = await supabase.functions.invoke('run-script', {
-            body: JSON.stringify({ script: 'test-api' })
+            headers: {
+                'Authorization': `Bearer ${sessionData.session.access_token}`,
+            },
+            body: {
+                script: 'test-api'
+            }
         });
         if (error) {
             console.error('Error invoking function:', error);
             return;
         }
+        console.log('Script executed successfully:', data);
     };
     onMounted(async () => {
        scripts.value = await _getScripts();
