@@ -6,7 +6,7 @@
 git clone https://github.com/Landeskompetenzzentrum-Forst-Eberswalde/FUK-Info-Dashboard.git
 cd FUK-Info-Dashboard
 npm install
-npm run dev:docs
+npm run docs:dev
 ```
 
 Open your browser and navigate to `http://localhost:5173/`.
