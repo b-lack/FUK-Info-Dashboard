@@ -24,7 +24,6 @@
             console.error('Error invoking function:', error);
             return [];
         }
-        console.log('Function invoked successfully:', data);
         return data?.data || [];
 /*
         const { data: sessionData, error } = await supabase.auth.getSession();
@@ -60,7 +59,7 @@
         }*/
     };
 
-    const _runScript = async () => {
+    const _runScript = async (script) => {
         // Get the user's session to forward the auth token
         const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
         if (sessionError) {
@@ -72,12 +71,13 @@
             return;
         }
 
+
         const { data, error } = await supabase.functions.invoke('run-script', {
             headers: {
                 'Authorization': `Bearer ${sessionData.session.access_token}`,
             },
             body: {
-                script: 'test-api'
+                script
             }
         });
         if (error) {
@@ -101,7 +101,7 @@
                     {{ script }}
                 </v-list-item-title>
                 <template v-slot:append>
-                    <v-btn @click="_runScript" :loading="loading" rounded="xl" color="primary">RUN</v-btn>
+                    <v-btn @click="() => _runScript(script)" :loading="loading" rounded="xl" color="primary">RUN</v-btn>
                 </template>
             </v-list-item>
         </v-list>
