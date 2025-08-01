@@ -1,5 +1,12 @@
 # FUK-Info-dashboard
 
+## Requirements
+
+You need to have the following installed on your machine:
+
+- Node.js https://nodejs.org/en/download
+- git https://git-scm.com/downloads
+
 ## Run locally
 
 ```bash

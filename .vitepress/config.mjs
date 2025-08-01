@@ -6,8 +6,7 @@ export default defineConfig({
   title: "Forstliche Umweltkontrolle",
   lang: 'de-DE',
   description: "Landeskompetenzzentrum Forst Eberswalde",
-  //base: '/FUK-Info-Dashboard/',
-  base: '/',
+  base: '/FUK-Info-Dashboard/',
   search: {
     provider: 'local'
   },
