@@ -147,6 +147,8 @@ layout: home
 <v-btn @click="_loadPLS">PLS</v-btn>  
 <v-btn @click="_loadPLT">PLT</v-btn>  
 
+Test
+
 <Map ref="mapRef"></Map>
 
 
