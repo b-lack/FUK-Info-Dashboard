@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted, getCurrentInstance} from 'vue'
+    import { ref, onMounted, getCurrentInstance, watch} from 'vue'
     import { createClient } from '@supabase/supabase-js'
 
     const instance = getCurrentInstance();
@@ -14,7 +14,7 @@
     let loading = ref(false);
     let lastTemp = ref(null);
 
-    onMounted(() => {
+    watch(onMounted( async () => {
         console.log('Mounted LastTempWidget');
         loading.value = true;
         supabase
@@ -23,20 +23,20 @@
             .select('date_observation, daily_max, daily_min, daily_mean, code_variable, instrument_seq_nr') // use * to get all contents
             .eq('code_plot', code_plot.value)
             .eq('code_variable', code_variable.value)
-            .in('instrument_seq_nr', instrument_seq_nr.value)
+            .eq('instrument_seq_nr', instrument_seq_nr.value)
             .order('date_observation', { ascending: false })
-            .limit(1).single.then(({ data, error }) => {
-                if (error) {
-                    console.error('Error fetching data:', error);
-                } else {
-                    console.log('Fetched data:', data);
-                    lastTemp.value = data
-                }
-            })
-            .finally(() => {
+            .limit(1).single
+
+            try {
+                console.log('Fetching last temperature data for plot:', data)
+                return lastTemp.value = data;
+            }
+            catch (error) {}
+
+            finally {
                 loading.value = false;
-            });
-    });
+            };
+    }));
 
     // definition der anderen plots für später
     const plots = {
