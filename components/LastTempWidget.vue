@@ -12,6 +12,7 @@
     let instrument_seq_nr = ref(1);
     //const variablesFilter = ref([]);
 
+    // von hier an ist der Code teilweise von Copilot
     onMounted(() => {
         // variablesFilter.value = ['AT'];
         _requestData(code_plot.value, code_variable.value, [instrument_seq_nr.value])
@@ -21,13 +22,17 @@
                 } else {
                     // Process the data as needed
                     console.log('Fetched data:', data);
+                    // save the data?
+                    lastTemp = data
                 }
             })
             .finally(() => {
                 _loading.value = false;
             });
     });
+    // bis hier, verstehe den teil dazwischen nicht ganz
 
+    // definition der anderen plots für später
     const plots = {
         1201: {name: 'Natteheide'},
         1202: {name: 'Beerenbusch'},
@@ -59,12 +64,9 @@
 </script>
 
 <template>
-    <div class="last-temp-widget">
-        <DInstrumentSelection v-model="instrument_seq_nr" :code_plot="code_plot" />
-        <DVariableSelection v-model="code_variable" :variablesFilter="variablesFilter" />
-        <div class="widget-content">
-            <p>Last Temperature: {{ code_variable }} at instrument {{ instrument_seq_nr }}</p>
-            <!-- Add more content as needed -->
-        </div>
-    </div>
+    <p>
+    // display the data
+        <data value=""></data>
+    </p>
+
 </template>
