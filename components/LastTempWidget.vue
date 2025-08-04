@@ -1,6 +1,4 @@
 <script setup>
-    import DVariableSelection from '../../components/DVariableSelection.vue'
-    import DInstrumentSelection from '../../components/DInstrumentSelection.vue'
     import { ref, onMounted } from 'vue'
     import { createClient } from '@supabase/supabase-js'
 
