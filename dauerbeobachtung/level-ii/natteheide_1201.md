@@ -3,6 +3,7 @@
     import TablePerPlot from '../../components/TablePerPlot.vue'
     import { ref, onMounted } from 'vue'
     import Jumbo from '../../components/Jumbo.vue'
+    import LastTempWidget from '../../components/LastTempWidget.vue'
 
     let code_plot = ref('1201');
     let code_variable = ref('AT');
@@ -43,4 +44,4 @@
 <TablePerPlot  :code_plot="code_plot" />
 
 ## Letzte Temperatur
-<LastTempWidget/>
+<LastTempWidget :/>
