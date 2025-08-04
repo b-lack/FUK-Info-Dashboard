@@ -15,6 +15,7 @@
     let lastTemp = ref(null);
 
     onMounted(() => {
+        console.log('Mounted LastTempWidget');
         loading.value = true;
         supabase
             .schema('icp_download')
@@ -57,7 +58,7 @@
     <p>
     {{ lastTemp.dateObservation }} -
     {{ lastTemp.daily_mean }} -
-    Instrument {{ lastTemp.daily_max}} -
+    {{ lastTemp.daily_max}} -
     {{ lastTemp.daily_min }}
 
     <!-- include a loader/ loading screen/bar-->
