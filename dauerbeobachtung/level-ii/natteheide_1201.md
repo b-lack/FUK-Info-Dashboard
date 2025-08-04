@@ -34,7 +34,7 @@
         WS: {name: 'Wind speed', unit: 'm/s'}
     }
 </script>
-
+<!--
 <Jumbo image="/level2/1201-Natteheide_Freiflaeche_resized.jpg" titled="Natteheide"/>
 
 ## Meteo
@@ -42,6 +42,6 @@
 
 ## Flächen-Details
 <TablePerPlot  :code_plot="code_plot" />
-
+-->
 ## Letzte Temperatur
 <LastTempWidget :/>
