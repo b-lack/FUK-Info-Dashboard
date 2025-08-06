@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted, onUpdated, getCurrentInstance, watch, nextTick} from 'vue'
+    import { ref, onMounted, getCurrentInstance, watch}  from 'vue'
     import { createClient } from '@supabase/supabase-js'
 
     const instance = getCurrentInstance();
