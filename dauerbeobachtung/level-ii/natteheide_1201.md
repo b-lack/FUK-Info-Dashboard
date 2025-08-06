@@ -1,7 +1,7 @@
 <script setup>
     import Chart from '../../components/Chart.vue'
     import TablePerPlot from '../../components/TablePerPlot.vue'
-    import { ref, onMounted } from 'vue'
+    import { ref, onMounted} from 'vue'
     //import Jumbo from '../../components/Jumbo.vue'
     import LastTempWidget from '../../components/LastTempWidget.vue';
 
@@ -44,4 +44,5 @@
 <TablePerPlot  :code_plot="code_plot" />
 -->
 ## Letzte Temperatur
+<LastTempWidget :code_plot="code_plot"/>
 <LastTempWidget/>
