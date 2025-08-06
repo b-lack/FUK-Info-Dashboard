@@ -44,5 +44,5 @@
 <TablePerPlot  :code_plot="code_plot" />
 -->
 ## Letzte Temperatur
-<LastTempWidget :code_plot="code_plot"/>
-<LastTempWidget/>
+<LastTempWidget :code_plot="code_plot"/> <!--:code_variable="'MP'"-->
+<!-- <LastTempWidget/> -->

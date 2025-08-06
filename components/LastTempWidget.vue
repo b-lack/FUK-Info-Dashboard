@@ -38,61 +38,38 @@
         }
     });
 
-    let code_plot = ref(props.code_plot);
-    let code_variable = ref(props.code_variable);
-    let instrument_seq_nr = ref(props.instrument_seq_nr);
     let loading = ref(false);
     const lastTemp = ref(null);
 
+    // function to reuse code from onMounted and watch
+    async function _fetchLastData() {
+      const { data, error } = await supabase
+        .schema('icp_download')
+        .from('mm_mem')
+        .select('*') // use * to get all contents
+        // .select('date_observation, daily_max, daily_min, daily_mean, code_variable, instrument_seq_nr')
+        .eq('code_plot', props.code_plot)
+        .eq('code_variable', props.code_variable)
+        .eq('instrument_seq_nr', props.instrument_seq_nr)
+        .order('date_observation', { ascending: false })
+        .limit(1)
+        .single();
+      if (error) {
+        console.error('error occured', error.message);
+        return;
+      }
+      lastTemp.value = data;
+      loading.value = false;
+    }
+
     onMounted( async () => {
       loading.value = true
-      try{
-        const { data, error } = await supabase
-          .schema('icp_download')
-          .from('mm_mem')
-          .select('*') // use * to get all contents
-          // .select('date_observation, daily_max, daily_min, daily_mean, code_variable, instrument_seq_nr')
-          .eq('code_plot', props.code_plot)
-          .eq('code_variable', code_variable.value)
-          .eq('instrument_seq_nr', instrument_seq_nr.value)
-          .order('date_observation', { ascending: false })
-          .limit(1)
-          .single();
-        if (error) {
-          console.error('error occured', error.message);
-        } else {
-          lastTemp.value = data;
-        }
-      } catch (err) {
-        console.error('error occured', err.message);
-      } finally {
-        loading.value = false;
-      }
+      await _fetchLastData();
     });
 
-    watch(() => props.code_plot, async (newCodePlot) => {
+    watch(() => [props.code_plot, props.code_variable, props.instrument_seq_nr], async () => { //[newCodePlot, newCodeVariable, newInstrument]
       loading.value = true;
-      try {
-          const { data, error } = await supabase
-          .schema('icp_download')
-          .from('mm_mem')
-          .select('*')
-          .eq('code_plot', newCodePlot)
-          .eq('code_variable', code_variable.value)
-          .eq('instrument_seq_nr', instrument_seq_nr.value)
-          .order('date_observation', { ascending: false })
-          .limit(1)
-          .single();
-          if (error) {
-          console.error('error occured', error.message);
-          } else {
-          lastTemp.value = data;
-          }
-      } catch (err) {
-          console.error('error occured', err.message);
-      } finally {
-          loading.value = false;
-      }
+      await _fetchLastData();
     });
 </script>
 
