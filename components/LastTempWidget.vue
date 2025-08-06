@@ -1,3 +1,14 @@
+<template>
+    <div v-if="lastTemp">
+    observation date: {{ lastTemp?.date_observation }} |
+    mean temp: {{ lastTemp?.daily_mean }}C |
+    max temp: {{ lastTemp?.daily_max }}C |
+    min temp: {{ lastTemp?.daily_min }}C
+
+    <!-- include a loader/ loading screen/bar-->
+    </div>
+</template>
+
 <script setup>
     import { ref, onMounted, getCurrentInstance, watch}  from 'vue'
     import { createClient } from '@supabase/supabase-js'
@@ -72,15 +83,3 @@
       await _fetchLastData();
     });
 </script>
-
-<template>
-    <div v-if="lastTemp">
-    observation date: {{ lastTemp?.date_observation }} |
-    mean temp: {{ lastTemp?.daily_mean }}C |
-    max temp: {{ lastTemp?.daily_max }}C |
-    min temp: {{ lastTemp?.daily_min }}C
-
-    <!-- include a loader/ loading screen/bar-->
-    </div>
-
-</template>
