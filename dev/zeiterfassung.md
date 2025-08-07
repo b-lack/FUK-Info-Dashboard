@@ -20,3 +20,16 @@
 - props/ passing data to components (15 min)
 [https://dev.to/hi_iam_chris/vuejs-part-10-passing-data-to-the-components-3ehg]
 - chatgpt für implementation von props + watcher (45 min)
+
+**07.08.2025**
+- vuetify components (15 min)
+[https://vuetifyjs.com/en/components/buttons/]
+[https://vuetifyjs.com/en/components/switches/]
+[https://vuetifyjs.com/en/components/button-groups/#api]
+- await function (15 min)
+[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await]
+- indexOf() (15 min)
+[https://www.w3schools.com/jsref/jsref_indexof.asp]
+- expressions and operators (15 min)
+[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators]
+- github copilot chat
