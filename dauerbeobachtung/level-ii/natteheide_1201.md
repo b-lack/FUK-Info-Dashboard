@@ -3,7 +3,7 @@
     import TablePerPlot from '../../components/TablePerPlot.vue'
     import { ref, onMounted} from 'vue'
     //import Jumbo from '../../components/Jumbo.vue'
-    import LastTempWidget from '../../components/LastTempWidget.vue';
+    import LastClimateValues from '../../components/LastClimateValues.vue';
 
     let code_plot = ref('1201');
     let code_variable = ref('AT');
@@ -43,6 +43,6 @@
 ## Flächen-Details
 <TablePerPlot  :code_plot="code_plot" />
 -->
-## Letzte Temperatur
-<LastTempWidget :code_plot="code_plot"/> <!--:code_variable="'MP'"-->
-<!-- <LastTempWidget/> -->
+## Zuletzt gemessene klimatische Werte
+<LastClimateValues :code_plot="code_plot" :code_variable="code_variable"/>
+<!-- <LastClimateValues/> -->
