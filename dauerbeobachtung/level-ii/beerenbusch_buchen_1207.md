@@ -41,3 +41,6 @@
 
 ## Flächen-Details
 <TablePerPlot  :code_plot="code_plot" />
+
+## Zuletzt gemessene klimatische Werte
+<LastClimateValues :code_plot="code_plot" :code_variable="code_variable"/>

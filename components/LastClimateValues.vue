@@ -46,21 +46,21 @@
   const instrument_seq_nr = ref(props.instrument_seq_nr);
   const variables = ref([]);
 
-  function _getCodeVariables() {
-      supabase
-          .schema('icp_dictionaries')
-          .from('d_variable')
-          .select('code, description, unit')
-          .neq('code', 'XX')
-          .then(response => {
-              // console.log(response.data)
-              variables.value = response.data;
-          })
-          .catch(error => {
-              console.log(error)
-          })
-  }
-// console.log('available variables', variables.value)
+  // function _getCodeVariables() {
+  //     supabase
+  //         .schema('icp_dictionaries')
+  //         .from('d_variable')
+  //         .select('code, description, unit')
+  //         .neq('code', 'XX')
+  //         .then(response => {
+  //             // console.log(response.data)
+  //             variables.value = response.data;
+  //         })
+  //         .catch(error => {
+  //             console.log(error)
+  //         })
+  // }
+  // console.log('available variables', variables.value)
 
   // function to cycle through variables
   async function _cycleVariables() {
@@ -114,7 +114,7 @@
 
   onMounted( async () => {
     loading.value = true
-    _getCodeVariables();
+    // _getCodeVariables();
     await _fetchLastData();
     // console.log('instrument_seq_nr', instrument_seq_nr.value);
   });
@@ -124,7 +124,7 @@
     // loading.value = true;
     // Update currentVariable when prop changes
     currentVariable.value = props.code_variable;
-    _getCodeVariables();
+    // _getCodeVariables();
     await _fetchLastData();
   });
 
