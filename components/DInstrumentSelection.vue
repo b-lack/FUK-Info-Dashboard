@@ -30,6 +30,7 @@
             .eq('code_plot', codePlot)
             .in('code_location', ['F', 'S'])
             .then(response => {
+                console.log(response.data)
 
                 // check if response.data.code_location has S or F
                 const sCount = response.data.filter(item => item.code_location === 'S');
@@ -56,7 +57,7 @@
             });
     }
     const _setCodeLocation = (location) => {
-       
+
         selected_location.value = location.code;
         key.value = location.code;
         emit('update:codeLocation', location);

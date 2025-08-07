@@ -3,6 +3,7 @@
     import TablePerPlot from '../../components/TablePerPlot.vue'
     import { ref, onMounted } from 'vue'
     import Jumbo from '../../components/Jumbo.vue'
+    import LastClimateValues from '../../components/LastClimateValues.vue';
 
     let code_plot = ref('1207');
     let code_variable = ref('AT');

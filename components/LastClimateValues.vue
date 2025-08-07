@@ -7,19 +7,6 @@
   const url = instance.appContext.config.globalProperties.$url;
   const supabase = createClient(url, apikey);
 
-  // definition der anderen plots für später
-  // const plots = {
-  //     1201: {name: 'Natteheide'},
-  //     1202: {name: 'Beerenbusch'},
-  //     1203: {name: 'Kienhorst'},
-  //     1204: {name: 'Weitzgrund'},
-  //     1205: {name: 'Neusorgefeld'},
-  //     1206: {name: 'Schwenow'},
-  //     1207: {name: 'Beerenbusch Buchen'},
-  //     1208: {name: 'Fünfeichen'},
-  //     1209: {name: 'Kienhorst Eichen'}
-  // };
-
   const props = defineProps({
       code_plot: {
           type: String,
@@ -31,19 +18,17 @@
           required: true,
           default: 'AT'
       },
-      instrument_seq_nr: {
-          type: Number,
-          required: true,
-          default: 1
-      }
+      // instrument_seq_nr: {
+      //     type: Number,
+      //     required: true,
+      //     default: 1
+      // }
   });
-
+  // statt loading noch zweite variable um button zu deaktivieren
   let loading = ref(false);
   const lastValue = ref(null);
-
-  // Create a reactive references for the currentVariable that can be modified
   const currentVariable = ref(props.code_variable);
-  const instrument_seq_nr = ref(props.instrument_seq_nr);
+  // const instrument_seq_nr = ref(props.instrument_seq_nr);
   const variables = ref([]);
 
   // function _getCodeVariables() {
@@ -60,31 +45,41 @@
   //             console.log(error)
   //         })
   // }
-  // console.log('available variables', variables.value)
+
+  // TODO abfragen welche codeVariables verfügbar sind
+  function _updateFilter(codePlot, codeLocation=null){
+        // console.log(codeLocation)
+        // if(!codeLocation) {
+        //     return;
+        // }
+        supabase
+            .schema('icp_download')
+            .from('code_variable_with_location') // TRY
+            .select()
+            // .in('instrument_seq_nr', codeLocation.instrument_seq_nrs)
+            .eq('code_plot', codePlot)
+            .then(response => {
+              console.log(response.data)
+                // variablesFilter.value = response.data.map(item => item.code_variable);
+                // response.data.forEach(item => {
+                //     variablesFilterDetails.value[item.code_variable] = item;
+                // });
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
 
   // function to cycle through variables
   async function _cycleVariables() {
+    // TODO replace static variables with dynamically fetched variables
+    // from _updateFilter()
     const variables = ['AP', 'AT', 'BR', 'MP', 'NR', 'PR', 'RH', 'SD', 'SF', 'SR', 'ST', 'TF', 'UR', 'WC', 'WD', 'WS']
-    // const variables = _getCodeVariables();
     let currentIndex = variables.indexOf(currentVariable.value);
-    // console.log('currentIndex', currentIndex);
     const nextIndex = (currentIndex + 1) % variables.length;
-    // console.log('nextIndex', nextIndex);
     currentVariable.value = variables[nextIndex];
     console.log('variable', currentVariable.value);
   }
-
-  // function to switch instruments
-  // async function _switchInstrument() {
-  //   if (instrument_seq_nr.value === 1) {
-  //     instrument_seq_nr.value = 2; // Switch to Freifläche
-  //   } else {
-  //     instrument_seq_nr.value = 1; // Switch to Waldstandort
-  //   }
-  //   console.log('current instrument_seq_nr', instrument_seq_nr.value);
-  //   loading.value = true;
-  //   await _fetchLastData();
-  // }
 
   // function to reuse code from onMounted and watch
   async function _fetchLastData() {
@@ -95,7 +90,6 @@
       // .select('date_observation, daily_max, daily_min, daily_mean, code_variable, instrument_seq_nr')
       .eq('code_plot', props.code_plot)
       .eq('code_variable', currentVariable.value)
-      .eq('instrument_seq_nr', instrument_seq_nr.value)
       .order('date_observation', { ascending: false })
       .limit(1)
       .single();
@@ -115,43 +109,36 @@
   onMounted( async () => {
     loading.value = true
     // _getCodeVariables();
+    await _updateFilter(props.code_plot);
     await _fetchLastData();
     // console.log('instrument_seq_nr', instrument_seq_nr.value);
   });
 
   // Watch for prop changes
   watch(() => [props.code_plot, props.code_variable], async () => {
-    // loading.value = true;
-    // Update currentVariable when prop changes
     currentVariable.value = props.code_variable;
-    // _getCodeVariables();
     await _fetchLastData();
   });
 
-  // Watch for currentVariable changes (when cycling)
-  watch(currentVariable, async () => {
-    // loading.value = true;
-    await _fetchLastData();
-  });
-
-  // Watch for instrument_seq_nr changes (when toggling between Waldstandort/Freifläche)
-  watch(instrument_seq_nr, async () => {
-    // loading.value = true;
+  // Watch for currentVariable and instrument changes (when cycling)
+  watch([currentVariable,instrument_seq_nr], async () => {
     await _fetchLastData();
   });
 </script>
 
 <template>
+  <!-- TODO <v-card> position='fixed' right bottom-->
+
   <div class="last-temp-widget">
-    <v-btn-toggle v-model="instrument_seq_nr">
+    <!-- <v-btn-toggle v-model="instrument_seq_nr">
       <v-btn :value="1">Waldstandort</v-btn>
       <v-btn :value="2">Freifläche</v-btn>
-    </v-btn-toggle>
+    </v-btn-toggle> -->
     <br></br>
-    <v-btn @click="_cycleVariables()">
+    <v-btn @click="_cycleVariables()" :disabled="loading">
+      <!-- TODO check if button is disabled during reloading, exchange for other variable that is only true on reloading, not on initial mount-->
       <b>Cycle Variables</b>
     </v-btn>
-    <!-- <v-switch label='Freifläche' @click="_switchInstrument()"></v-switch> -->
     <br></br>
     <div v-if="!loading">
       <b>chosen variable: {{ currentVariable }}</b>
