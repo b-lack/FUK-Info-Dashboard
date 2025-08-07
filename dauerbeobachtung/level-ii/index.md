@@ -14,7 +14,7 @@ Auf der Intensitätsstufe Level II werden in Brandenburg von ursprünglich (1996
     const { isDark } = useGlobalTheme()
 
     const codePlot_list = [
-        { code_plot: 1101, name: 'Grünewald', link: '/dauerbeobachtung/level-ii/grunewald_1101' },
+        { code_plot: 1101, name: 'Grunewald', link: '/dauerbeobachtung/level-ii/grunewald_1101' },
         { code_plot: 1201, name: 'Natteheide', link: '/dauerbeobachtung/level-ii/natteheide_1201' },
         { code_plot: 1202, name: 'Beerenbusch Kiefer', link: '/dauerbeobachtung/level-ii/beerenbusch-kiefer_1202' },
         { code_plot: 1203, name: 'Kienhorst', link: '/dauerbeobachtung/level-ii/kienhorst_1203' },
