@@ -89,8 +89,8 @@
     const { data, error } = await supabase
       .schema('icp_download')
       .from('mm_mem')
-      .select('*') // use * to get all contents
-      // .select('date_observation, daily_max, daily_min, daily_mean, code_variable')
+      // .select('*') // use * to get all contents
+      .select('date_observation, daily_max, daily_min, daily_mean, code_variable')
       .eq('code_plot', props.code_plot)
       .eq('code_variable', currentVariable.value)
       .order('date_observation', { ascending: false })
@@ -137,6 +137,7 @@
 </script>
 
 <template>
+  <!--die v-card kann nicht in der rechten unteren Ecke platziert werden, da im rechten Seitenbereich Klicken/ Auswählen nicht möglich ist-->
   <v-card
   elevation="8"
   shaped
@@ -149,6 +150,7 @@
         <span class="headline"> Zuletzt gemessene klimatische Werte</span>
     </v-card-title>
     <v-card-actions>
+      <!-- TO CHANGE: @click _fetchLastData bedeutet, dass die Daten pro Variable zwei Mal geladen werden-->
       <v-select
         v-model="currentVariable"
         :items="variables"
