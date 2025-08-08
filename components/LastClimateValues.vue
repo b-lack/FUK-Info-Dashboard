@@ -98,7 +98,7 @@
       .single();
     console.log('data', data);
     // null and 0 are seen as the same return value in Vue, so we need to check for null explicitly
-    // if (data.daily_max === 0 || data.daily_min === 0 || data.daily_mean === 0) {
+    // if (data.daily_max === null || data.daily_min === null || data.daily_mean === null) {
     //   console.warn('No data found for the given plot and variable');
     //   lastValue.value = null; // Clear lastValue when no data is found
     //   console.log('lastValue: ', lastValue.value);
@@ -142,6 +142,8 @@
   elevation="8"
   shaped
   outlined
+  max-width="620px"
+  max-height="147px"
   color="primary"
   location="bottom"
   style="position: fixed; bottom: 3px;"> <!--right: 20px;-->
@@ -150,8 +152,9 @@
         <span class="headline"> Zuletzt gemessene klimatische Werte</span>
     </v-card-title>
     <v-card-actions>
+
       <!-- TO CHANGE: @click _fetchLastData bedeutet, dass die Daten pro Variable zwei Mal geladen werden-->
-      <v-select
+      <!-- <v-select
         v-model="currentVariable"
         :items="variables"
         item-text="description"
@@ -160,12 +163,14 @@
         dense
         style="min-width: 90px;"
         @click="_fetchLastData"
-        />
-      <!-- <v-btn @click="_cycleVariables()" :disabled="loading" elevation="3">
+        /> -->
+
+      <v-btn @click="_cycleVariables()" :disabled="loading" elevation="3">
         <b>Klick mich!</b>
-      </v-btn> -->
+      </v-btn>
+
       <div v-if="!loading">
-        <!-- <b>Klimavariable:</b> {{ currentVariable }} - -->
+        <b>Klimavariable:</b> {{ currentVariable }} |
         <b>Aufnahmedatum:</b> {{ lastValue && lastValue.date_observation || 'NA' }} |
         <b>Durchschnittlich:</b> {{ lastValue && lastValue.daily_mean || 'NA' }} |
         <b>Maximal:</b> {{ lastValue && lastValue.daily_max || 'NA' }} |

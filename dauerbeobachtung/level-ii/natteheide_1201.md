@@ -2,7 +2,7 @@
 import Chart from '../../components/Chart.vue'
 import TablePerPlot from '../../components/TablePerPlot.vue'
 import { ref, onMounted} from 'vue'
-// import Jumbo from '../../components/Jumbo.vue'
+import Jumbo from '../../components/Jumbo.vue'
 import LastClimateValues from '../../components/LastClimateValues.vue';
 
 let code_plot = ref('1201');
@@ -35,7 +35,7 @@ const variables = {
 }
 </script>
 
-<!-- <Jumbo image="/level2/1201-Natteheide_Freiflaeche_resized.jpg" titled="Natteheide"/> -->
+<Jumbo image="/level2/1201-Natteheide_Freiflaeche_resized.jpg" titled="Natteheide"/>
 
 ## Meteo
 <Chart :code_plot="code_plot" :code_variable="code_variable" :code_plot_description="plots[code_plot]" :code_variable_description="variables[code_variable]"  />
