@@ -31,6 +31,9 @@
   // const instrument_seq_nr = ref(props.instrument_seq_nr);
   let variables = ref([]);
 
+
+  // TODO retrieve variable descriptions and save them for further use
+
   // function _getCodeVariables() {
   //     supabase
   //         .schema('icp_dictionaries')
@@ -150,7 +153,6 @@
         v-model="currentVariable"
         :items="variables"
         item-text="description"
-        item-value="code"
         label=""
         outlined
         dense
