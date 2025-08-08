@@ -24,12 +24,12 @@
       //     default: 1
       // }
   });
-  // statt loading noch zweite variable um button zu deaktivieren
+
   let loading = ref(false);
   const lastValue = ref(null);
   const currentVariable = ref(props.code_variable);
   // const instrument_seq_nr = ref(props.instrument_seq_nr);
-  const variables = ref([]);
+  let variables = ref([]);
 
   // function _getCodeVariables() {
   //     supabase
@@ -46,8 +46,7 @@
   //         })
   // }
 
-  // TODO abfragen welche codeVariables verfügbar sind
-  function _updateFilter(codePlot, codeLocation=null){
+  async function _updateFilter(codePlot, codeLocation=null){
         // console.log(codeLocation)
         // if(!codeLocation) {
         //     return;
@@ -56,10 +55,15 @@
             .schema('icp_download')
             .from('code_variable_with_location') // TRY
             .select()
-            // .in('instrument_seq_nr', codeLocation.instrument_seq_nrs)
             .eq('code_plot', codePlot)
             .then(response => {
-              console.log(response.data)
+              // following https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-a-javascript-array
+              // and https://stackoverflow.com/questions/33089695/how-can-i-sort-an-es6-set
+              variables = [...new Set(response.data.map(item => item.code_variable))].sort();
+              // console.log('type of variables:', typeof(variables));
+              // console.log('variables', variables);
+              // console.log(response.data)
+              return variables;
                 // variablesFilter.value = response.data.map(item => item.code_variable);
                 // response.data.forEach(item => {
                 //     variablesFilterDetails.value[item.code_variable] = item;
@@ -72,28 +76,32 @@
 
   // function to cycle through variables
   async function _cycleVariables() {
-    // TODO replace static variables with dynamically fetched variables
-    // from _updateFilter()
-    const variables = ['AP', 'AT', 'BR', 'MP', 'NR', 'PR', 'RH', 'SD', 'SF', 'SR', 'ST', 'TF', 'UR', 'WC', 'WD', 'WS']
     let currentIndex = variables.indexOf(currentVariable.value);
     const nextIndex = (currentIndex + 1) % variables.length;
     currentVariable.value = variables[nextIndex];
-    console.log('variable', currentVariable.value);
   }
 
-  // function to reuse code from onMounted and watch
+  // function to reuse code in onMounted and watch
   async function _fetchLastData() {
     const { data, error } = await supabase
       .schema('icp_download')
       .from('mm_mem')
       .select('*') // use * to get all contents
-      // .select('date_observation, daily_max, daily_min, daily_mean, code_variable, instrument_seq_nr')
+      // .select('date_observation, daily_max, daily_min, daily_mean, code_variable')
       .eq('code_plot', props.code_plot)
       .eq('code_variable', currentVariable.value)
       .order('date_observation', { ascending: false })
       .limit(1)
       .single();
-
+    console.log('data', data);
+    // null and 0 are seen as the same return value in Vue, so we need to check for null explicitly
+    // if (data.daily_max === 0 || data.daily_min === 0 || data.daily_mean === 0) {
+    //   console.warn('No data found for the given plot and variable');
+    //   lastValue.value = null; // Clear lastValue when no data is found
+    //   console.log('lastValue: ', lastValue.value);
+    //   loading.value = false;
+    //   return;
+    // }
     if (error) {
       console.error('error occured', error.message);
       lastValue.value = null; // Clear lastValue when there's an error
@@ -102,16 +110,15 @@
     }
 
     // Always update lastValue, even if data is null/undefined
-    lastValue.value = data || null;
+    lastValue.value = data;
     loading.value = false;
   }
 
   onMounted( async () => {
     loading.value = true
-    // _getCodeVariables();
-    await _updateFilter(props.code_plot);
+    // ACCORDING TO COPILOT, AWAIT DOES NOT DO ANYTHING HERE, PLEASE CHECK
+    variables = await _updateFilter(props.code_plot);
     await _fetchLastData();
-    // console.log('instrument_seq_nr', instrument_seq_nr.value);
   });
 
   // Watch for prop changes
@@ -120,40 +127,49 @@
     await _fetchLastData();
   });
 
-  // Watch for currentVariable and instrument changes (when cycling)
-  watch([currentVariable,instrument_seq_nr], async () => {
+  // Watch for currentVariable changes (when cycling)
+  watch([currentVariable], async () => {
     await _fetchLastData();
   });
 </script>
 
 <template>
-  <!-- TODO <v-card> position='fixed' right bottom-->
-
-  <div class="last-temp-widget">
-    <!-- <v-btn-toggle v-model="instrument_seq_nr">
-      <v-btn :value="1">Waldstandort</v-btn>
-      <v-btn :value="2">Freifläche</v-btn>
-    </v-btn-toggle> -->
-    <br></br>
-    <v-btn @click="_cycleVariables()" :disabled="loading">
-      <!-- TODO check if button is disabled during reloading, exchange for other variable that is only true on reloading, not on initial mount-->
-      <b>Cycle Variables</b>
-    </v-btn>
-    <br></br>
-    <div v-if="!loading">
-      <b>chosen variable: {{ currentVariable }}</b>
-      <br>
-      observation date: {{ lastValue?.date_observation || '' }}
-      <br>
-      mean value: {{ lastValue?.daily_mean || '' }}
-      <br>
-      max value: {{ lastValue?.daily_max || '' }}
-      <br>
-      min value: {{ lastValue?.daily_min || '' }}
-    </div>
-    <div v-else>
-    <br></br>
-      <v-progress-linear indeterminate="true"/>
-    </div>
-  </div>
+  <v-card
+  elevation="8"
+  shaped
+  outlined
+  color="primary"
+  location="bottom"
+  style="position: fixed; bottom: 3px;"> <!--right: 20px;-->
+    <v-card-title>
+        <v-icon>mdi-weather-hazy</v-icon>
+        <span class="headline"> Zuletzt gemessene klimatische Werte</span>
+    </v-card-title>
+    <v-card-actions>
+      <v-select
+        v-model="currentVariable"
+        :items="variables"
+        item-text="description"
+        item-value="code"
+        label=""
+        outlined
+        dense
+        style="min-width: 90px;"
+        @click="_fetchLastData"
+        />
+      <!-- <v-btn @click="_cycleVariables()" :disabled="loading" elevation="3">
+        <b>Klick mich!</b>
+      </v-btn> -->
+      <div v-if="!loading">
+        <!-- <b>Klimavariable:</b> {{ currentVariable }} - -->
+        <b>Aufnahmedatum:</b> {{ lastValue && lastValue.date_observation || 'NA' }} |
+        <b>Durchschnittlich:</b> {{ lastValue && lastValue.daily_mean || 'NA' }} |
+        <b>Maximal:</b> {{ lastValue && lastValue.daily_max || 'NA' }} |
+        <b>Minimal:</b> {{ lastValue && lastValue.daily_min || 'NA' }}
+      </div>
+      <div v-else>
+        <v-progress-linear indeterminate/>
+      </div>
+    </v-card-actions>
+  </v-card>
 </template>

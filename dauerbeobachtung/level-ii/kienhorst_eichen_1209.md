@@ -42,3 +42,5 @@
 
 ## Flächen-Details
 <TablePerPlot  :code_plot="code_plot" />
+
+<LastClimateValues :code_plot="code_plot" :code_variable="code_variable"/>

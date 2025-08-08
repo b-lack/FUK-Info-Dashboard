@@ -33,3 +33,13 @@
 - expressions and operators (15 min)
 [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_operators]
 - github copilot chat
+
+**08.08.2025**
+- html basics (30 min)
+[https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/span]
+[https://developer.mozilla.org/en-US/docs/Web/CSS/text-align]
+- mdi icons (5 min)
+[https://pictogrammers.com/library/mdi/]
+- vuetify components (30 min)
+[https://vuetifyjs.com/en/components/cards/#usage]
+[https://vuetifyjs.com/en/api/v-card/#props]
